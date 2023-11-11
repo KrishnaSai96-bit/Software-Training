@@ -18,4 +18,4 @@ class Post(Base):
     content = Column(String(100))
     user_id = Column(Integer) #foreign key
     
-    #Teja
+#Updated on 11th
