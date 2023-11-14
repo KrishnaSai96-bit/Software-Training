@@ -6,7 +6,9 @@ from typing import Annotated
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
+
 from sqlalchemy.sql import text
+
 
 # instantiate app
 app = FastAPI()
