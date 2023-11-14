@@ -6,9 +6,7 @@ from typing import Annotated
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
-
 from sqlalchemy.sql import text
-
 
 # instantiate app
 app = FastAPI()
@@ -18,6 +16,7 @@ class PostBase(BaseModel):
     title: str
     content: str
     user_id: int
+    comments: str
 
 class UserBase(BaseModel):
     username: str
@@ -38,7 +37,7 @@ async def create_post(post: PostBase, db:db_dependency):
     post = post.model_dump()
     # db.add(db_post)
     # db.commit()
-    statement = text("INSERT INTO posts(title, content, user_id) VALUES(:title, :content, :user_id)")
+    statement = text("INSERT INTO posts(title, content, user_id, comments) VALUES(:title, :content, :user_id, :comments)")
     db.execute(statement, post)
     db.commit()
 

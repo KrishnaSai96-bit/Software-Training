@@ -17,5 +17,6 @@ class Post(Base):
     title = Column(String(50))
     content = Column(String(100))
     user_id = Column(Integer) #foreign key
+    comments = Column(String(50))
     
 #Updated on 11th
