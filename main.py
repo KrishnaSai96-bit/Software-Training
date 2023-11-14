@@ -40,10 +40,18 @@ async def create_post(post: PostBase, db:db_dependency):
     # db.add(db_post)
     # db.commit()
     statement = text("INSERT INTO posts(title, content, user_id, comments) VALUES(:title, :content, :user_id, :comments)")
+    #by writing a sql stmt (native sql)
     db.execute(statement, post)
     db.commit()
 
-@app.get("/posts/{post_id}", status_code=status.HTTP_200_OK)
+#api name is posts
+#end point name is get
+#this end point returns post_dict
+#this post_dict contais key values where value is 2D "Array"
+#this end point has a fucntion called read_post
+#any method typically will take input parameters and returns something
+#this read_post method is taking 2 input prameters post_id, db and returnn post_dict
+@app.get("/posts/{post_id}", status_code=status.HTTP_200_OK) #get menthod
 async def read_post(post_id:int, db:db_dependency):
     # post = db.query(models.Post).filter(models.Post.id == post_id).first()
     # if post is None:
@@ -54,7 +62,12 @@ async def read_post(post_id:int, db:db_dependency):
     post = result.fetchall()
     post_dict = {'id':post[0][0], 'title':post[0][1], 'content':post[0][2], 'user_id':post[0][3]}
     return post_dict
-   
+
+#api name is post
+#end point name is delete
+#here method is in delete_post 
+#method take 2 input parameters whcih are post_id and db
+#returns null
 @app.delete("/posts/{post_id}", status_code=status.HTTP_200_OK)
 async def delete_post(post_id: int, db:db_dependency):
     db_post = db.query(models.Post).filter(models.Post.id == post_id).first()
