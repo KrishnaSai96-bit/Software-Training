@@ -4,19 +4,20 @@
 from sqlalchemy import Boolean, Column, Integer, String
 from database import Base 
 
-class User(Base):
-    __tablename__ = 'users'
+class Recipe(Base):
+    __tablename__ = 'recipe'
 
-    id = Column(Integer, primary_key=True, index=True) #first column in db, want to be able to index (faster performance)
-    username = Column(String(50), unique=True) #instantiate string with varchar 50
+    idRECIPE = Column(Integer, primary_key=True, index=True) #first column in db, want to be able to index (faster performance)
+    RECIPE_Title = Column(String(50), unique=True) #instantiate string with varchar 50
+    RECIPE_Category = Column(String(50), unique=True)
+    RECIPE_CookingTime = Column(Integer, unique=True)
 
-class Post(Base):
-    __tablename__ = 'posts'
+class Recipe_Details(Base):
+    __tablename__ = 'recipe_details'
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(50))
-    content = Column(String(100))
-    user_id = Column(Integer) #foreign key
-    comments = Column(String(50))
-    
+    Ingredients = Column(String(1000))
+    Recipe_Setps = Column(String(1000))
+    idRECIPE = Column(Integer) #foreign key
+ 
 #Updated on 11th
