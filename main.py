@@ -52,11 +52,32 @@ async def create_recipe(recipeBO: RecipeBO, db:db_dependency):
     db.execute(statement, recipeBO)
     db.commit()
     
+@app.post("/CookBook/CreateRecipeORM", status_code=status.HTTP_201_CREATED)
+async def create_recipe(recipeBO: RecipeBO, db:db_dependency):
+    #Step1: Set BO with values passed by User Interface (FAst API) By Using "._model dump metod"
+    #Stpe2: Create a Database Object by adding BO using models.method
+    #Step3: Insert Data into table by adding DAO
+    db_recipeDAO = models.Recipe(**recipeBO.model_dump())
+    #ToDo: Rasie dupicate exception
+    # if db_recipeDAO: 
+    #     raise HTTPException(status_code=404, detail='Duplicate Enrty')
+    db.add(db_recipeDAO)
+    db.commit()
+    
 @app.post("/CookBook/CreateReciepDetails", status_code=status.HTTP_201_CREATED)
 async def create_recipe_detials(recipeDetailsBO: RecipeDetailsBO, db:db_dependency):
     recipeDetailsBO = recipeDetailsBO.model_dump()
     statement = text("INSERT INTO recipe_details(Ingredients, Recipe_Steps, idRECIPE) VALUES(:Ingredients, :Recipe_Steps, :idRECIPE)")
     db.execute(statement, recipeDetailsBO)
+    db.commit()
+    
+@app.post("/CookBook/CreateRecipeDetails_ORM", status_code=status.HTTP_201_CREATED)
+async def create_recipe_details(recipeDetailsBO: RecipeDetailsBO, db:db_dependency):
+    #Step1: Set BO with values passed by User Interface (FAst API) By Using "._model dump metod"
+    #Stpe2: Create a Database Object by adding BO using models.method
+    #Step3: Insert Data into table by adding DAO
+    db_recipeDetailsDAO = models.Recipe_Details(**recipeDetailsBO.model_dump())
+    db.add(db_recipeDetailsDAO)
     db.commit()
     
 @app.get("/CookBook/GetRecipe{recipe_id}", status_code=status.HTTP_200_OK)
@@ -67,6 +88,19 @@ async def get_recipe(recipe_id:int, db:db_dependency):
     recipe_dict = {'idRECIPE':recipe[0][0], 'RECIPE_Title':recipe[0][1], 'RECIPE_Category':recipe[0][2], 'RECIPE_CookingTime':recipe[0][3]}
     return recipe_dict
 
+@app.get("/CookBook/GetRecipe_ORM/{recipe_id}", status_code=status.HTTP_200_OK)
+async def get_recipe(recipe_id:int, db:db_dependency):
+    #Step1: Arugument that is entered is recipe_id
+    #Step2: ORM equivalent sql is 
+            #db.query = SELECT
+            #models.Receipe = from table name
+            #filter = where class
+            #.first = fetch first row
+    recipe = db.query(models.Recipe).filter(models.Recipe.idRECIPE == recipe_id).first()
+    if recipe is None:
+        raise HTTPException(status_code=404, detail='Recipe was not found')
+    return recipe
+    
 #@app.get("/CookBook/GetRecipeDetails{recipe_id}", status_code=status.HTTP_200_OK) 
 @app.get("/CookBook/GetList", status_code=status.HTTP_200_OK)
 async def get_recipe_details(db:db_dependency):
@@ -85,6 +119,7 @@ async def get_recipe_details(db:db_dependency):
         recipe_list.append(recipe_dict)
     return recipe_list
 
+
 @app.get("/CookBook/GetListOfCategories{RECIPE_Category}", status_code=status.HTTP_200_OK)
 async def get_recipe_categories(RECIPE_Category: str, db:db_dependency):
     statement = text("Select * from recipe where RECIPE_Category = :RECIPE_Category") 
@@ -97,6 +132,19 @@ async def get_recipe_categories(RECIPE_Category: str, db:db_dependency):
         recipe_dict = {'idRECIPE':recipe[i][0], 'RECIPE_Title':recipe[i][1], 'RECIPE_CookingTime':recipe[i][3]}
         categories.append(recipe_dict)
     return categories
+
+@app.get("/CookBook/GetListOfCategories_ORM/{RECIPE_Category}", status_code=status.HTTP_200_OK)
+async def get_recipe_categories(RECIPE_Categoty: str, db:db_dependency):
+    #Step1: Arugument that is entered is recipe_id
+    #Step2: ORM equivalent sql is 
+            #db.query = SELECT
+            #models.Receipe = from table name
+            #filter = where class
+            #.first = fetch first row
+    recipe = db.query(models.Recipe).filter(models.Recipe.RECIPE_Category == RECIPE_Categoty).all()
+    if recipe is None:
+        raise HTTPException(status_code=404, detail='Recipes are not found')
+    return recipe
 
     #  recipe_dict = {'idRECIPE':recipe[0][0], 'RECIPE_Title':recipe[0][1], 'RECIPE_Category':recipe[0][2], 'RECIPE_CookingTime':recipe[0][3]}
     #  return recipe_dict
