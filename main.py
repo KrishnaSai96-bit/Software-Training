@@ -1,41 +1,52 @@
-# main file for fastAPI app
-
+from sqlalchemy import Boolean, Column, Integer, String
+#from database import Base
+from sqlalchemy import create_engine #for db to connect with app
+from sqlalchemy.orm import sessionmaker 
+from sqlalchemy.ext.declarative import declarative_base 
 from fastapi import FastAPI, HTTPException, Depends, status, Response
 from pydantic import BaseModel #data validation
 from typing import Annotated
-import models
-from database import engine, SessionLocal
+#import models
+#from database import engine, SessionLocal
 from sqlalchemy.orm import Session
-
 from sqlalchemy.sql import text
-
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+#Preparing Database/Engine/Local Session
+URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/cookingdata'
+engine = create_engine(URL_DATABASE)
+SessionLocal = sessionmaker(autocommit = False, autoflush = False, bind = engine)
+Base = declarative_base()
 
+#Data Models
+class CookingData(Base):
+    __tablename__ = 'CookingData'
+    
+    ID = Column(Integer, primary_key= True, index= True)
+    Title = Column(String(50))
+    Ingredients = Column(String(5000))
+    CookingTime = Column(Integer)
+    Category = Column(String(50))
+    Steps = Column(String(5000)) 
+    
 
-# instantiate app
 app = FastAPI()
-models.Base.metadata.create_all(bind=engine) #creates tables in MySQL database based on the definitions in model.py
+Base.metadata.create_all(bind=engine) 
 
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request, exc):
     return PlainTextResponse(str(exc.detail), status_code=exc.status_code)
 
-class RecipeBO(BaseModel):
-    idRECIPE: int
-    RECIPE_Title: str
-    RECIPE_Category: str
-    RECIPE_CookingTime: str
-    
-     
-class RecipeDetailsBO(BaseModel):
+class CookingData(BaseModel):
+    ID: int
+    Title: str
     Ingredients: str
-    Recipe_Steps: str
-    idRECIPE: int
-
-
+    CookingTime: int
+    Category: str
+    Steps: str
+    
 def get_db():
     db = SessionLocal()
     try:
@@ -43,122 +54,18 @@ def get_db():
     finally:
         db.close()
 
-db_dependency = Annotated[Session, Depends(get_db)] #db and class
+db_dependency = Annotated[Session, Depends(get_db)]
 
-@app.post("/CookBook/CreateRecipe", status_code=status.HTTP_201_CREATED)
-async def create_recipe(recipeBO: RecipeBO, db:db_dependency):
-    recipeBO = recipeBO.model_dump()
-    statement = text("INSERT INTO recipe(idRECIPE, RECIPE_Title, RECIPE_Category, RECIPE_CookingTime) VALUES(:idRECIPE, :RECIPE_Title, :RECIPE_Category, :RECIPE_CookingTime)")
-    db.execute(statement, recipeBO)
+#Post Method using ORM Model
+# @app.post("/CookingData/CreateData", status_code=status.HTTP_200_OK)
+# async def CreateData (CDBO: CookingData, db:db_dependency):
+#     db_dao = CookingData(**CDBO.model_dump())
+#     db.add(db_dao)
+#     db.commit()
+    
+@app.post("/CookingData/CreateData", status_code=status.HTTP_200_OK)
+async def CreateData (CDBO: CookingData, db:db_dependency):
+    CDBO = CDBO.model_dump()
+    statement = text("INSERT INTO cookingdata(ID, Title, Ingredients, CookingTime, Category, Steps) VALUES(:ID, :Title, :Ingredients, :CookingTime, :Category, :Steps)")
+    db.execute(statement, CDBO)
     db.commit()
-    
-@app.post("/CookBook/CreateRecipeORM", status_code=status.HTTP_201_CREATED)
-async def create_recipe(recipeBO: RecipeBO, db:db_dependency):
-    #Step1: Set BO with values passed by User Interface (FAst API) By Using "._model dump metod"
-    #Stpe2: Create a Database Object by adding BO using models.method
-    #Step3: Insert Data into table by adding DAO
-    db_recipeDAO = models.Recipe(**recipeBO.model_dump())
-    #ToDo: Rasie dupicate exception
-    # if db_recipeDAO: 
-    #     raise HTTPException(status_code=404, detail='Duplicate Enrty')
-    db.add(db_recipeDAO)
-    db.commit()
-    
-@app.post("/CookBook/CreateReciepDetails", status_code=status.HTTP_201_CREATED)
-async def create_recipe_detials(recipeDetailsBO: RecipeDetailsBO, db:db_dependency):
-    recipeDetailsBO = recipeDetailsBO.model_dump()
-    statement = text("INSERT INTO recipe_details(Ingredients, Recipe_Steps, idRECIPE) VALUES(:Ingredients, :Recipe_Steps, :idRECIPE)")
-    db.execute(statement, recipeDetailsBO)
-    db.commit()
-    
-@app.post("/CookBook/CreateRecipeDetails_ORM", status_code=status.HTTP_201_CREATED)
-async def create_recipe_details(recipeDetailsBO: RecipeDetailsBO, db:db_dependency):
-    #Step1: Set BO with values passed by User Interface (FAst API) By Using "._model dump metod"
-    #Stpe2: Create a Database Object by adding BO using models.method
-    #Step3: Insert Data into table by adding DAO
-    db_recipeDetailsDAO = models.Recipe_Details(**recipeDetailsBO.model_dump())
-    db.add(db_recipeDetailsDAO)
-    db.commit()
-    
-@app.get("/CookBook/GetRecipe{recipe_id}", status_code=status.HTTP_200_OK)
-async def get_recipe(recipe_id:int, db:db_dependency):
-    statement = text("SELECT * FROM recipe WHERE idRECIPE = :recipe_id")
-    result = db.execute(statement, {'recipe_id': recipe_id})
-    recipe = result.fetchall()
-    recipe_dict = {'idRECIPE':recipe[0][0], 'RECIPE_Title':recipe[0][1], 'RECIPE_Category':recipe[0][2], 'RECIPE_CookingTime':recipe[0][3]}
-    return recipe_dict
-
-@app.get("/CookBook/GetRecipe_ORM/{recipe_id}", status_code=status.HTTP_200_OK)
-async def get_recipe(recipe_id:int, db:db_dependency):
-    #Step1: Arugument that is entered is recipe_id
-    #Step2: ORM equivalent sql is 
-            #db.query = SELECT
-            #models.Receipe = from table name
-            #filter = where class
-            #.first = fetch first row
-    recipe = db.query(models.Recipe).filter(models.Recipe.idRECIPE == recipe_id).first()
-    if recipe is None:
-        raise HTTPException(status_code=404, detail='Recipe was not found')
-    return recipe
-    
-#@app.get("/CookBook/GetRecipeDetails{recipe_id}", status_code=status.HTTP_200_OK) 
-@app.get("/CookBook/GetList", status_code=status.HTTP_200_OK)
-async def get_recipe_details(db:db_dependency):
-    statement = text("SELECT recipe.idRECIPE, recipe.RECIPE_Title, recipe.RECIPE_Category, recipe.RECIPE_CookingTime, recipe_details.Ingredients, recipe_details.Recipe_Steps FROM recipe, recipe_details WHERE recipe.idRECIPE = recipe_details.idRECIPE")
-    result = db.execute(statement)
-    recipes = result.fetchall()
-    # recipe_dict = { 'idRECIPE':recipe[0][0], 'RECIPE_Title':recipe[0][1], 'RECIPE_Category':recipe[0][2], 
-    #                 'RECIPE_CookingTime':recipe[0][3], 'Ingredients':recipe[0][4], 
-    #                 'Recipe_Steps':recipe[0][5], 'idRECIPE':recipe[0][6]}
-    # return recipe_dict
-    recipe_list = []
-    for i in range(len(recipes)):
-        recipe_dict = {'idRECIPE':recipes[i][0], 'RECIPE_Title':recipes[i][1], 'RECIPE_Category':recipes[i][2], 
-                     'RECIPE_CookingTime':recipes[i][3], 'Ingredients':recipes[i][4], 
-                     'Recipe_Steps':recipes[i][5]}
-        recipe_list.append(recipe_dict)
-    return recipe_list
-
-
-@app.get("/CookBook/GetListOfCategories{RECIPE_Category}", status_code=status.HTTP_200_OK)
-async def get_recipe_categories(RECIPE_Category: str, db:db_dependency):
-    statement = text("Select * from recipe where RECIPE_Category = :RECIPE_Category") 
-    result = db.execute(statement, {'RECIPE_Category': RECIPE_Category})
-    recipe = result.fetchall()
-    if len(recipe) == 0:
-        raise HTTPException(status_code=404, detail='No Recipe is Found')
-    categories = []
-    for i in range(len(recipe)):
-        recipe_dict = {'idRECIPE':recipe[i][0], 'RECIPE_Title':recipe[i][1], 'RECIPE_CookingTime':recipe[i][3]}
-        categories.append(recipe_dict)
-    return categories
-
-@app.get("/CookBook/GetListOfCategories_ORM/{RECIPE_Category}", status_code=status.HTTP_200_OK)
-async def get_recipe_categories(RECIPE_Categoty: str, db:db_dependency):
-    #Step1: Arugument that is entered is recipe_id
-    #Step2: ORM equivalent sql is 
-            #db.query = SELECT
-            #models.Receipe = from table name
-            #filter = where class
-            #.first = fetch first row
-    recipe = db.query(models.Recipe).filter(models.Recipe.RECIPE_Category == RECIPE_Categoty).all()
-    if recipe is None:
-        raise HTTPException(status_code=404, detail='Recipes are not found')
-    return recipe
-
-    #  recipe_dict = {'idRECIPE':recipe[0][0], 'RECIPE_Title':recipe[0][1], 'RECIPE_Category':recipe[0][2], 'RECIPE_CookingTime':recipe[0][3]}
-    #  return recipe_dict
-     
-     
-     
-
-# @app.get("/posts/", status_code=status.HTTP_200_OK)
-# async def get_all_posts(db:db_dependency):
-#     statement = text("SELECT * FROM posts")
-#     result = db.execute(statement)
-#     post = result.fetchall()
-#     all_posts = []
-#     for i in range(len(post)):
-#         post_dict = {'id':post[i][0], 'title':post[i][1], 'content':post[i][2], 'user_id':post[i][3]}
-#         all_posts.append(post_dict)
-#     return all_posts
