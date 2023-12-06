@@ -13,23 +13,27 @@ from sqlalchemy.sql import text
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from sqlalchemy import insert
+from sqlalchemy.sql import text
+from csv import DictReader
 
 #Preparing Database/Engine/Local Session
 URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/cookingdata'
 engine = create_engine(URL_DATABASE)
 SessionLocal = sessionmaker(autocommit = False, autoflush = False, bind = engine)
 Base = declarative_base()
+db = SessionLocal()
 
 #Data Models
 class CookingData(Base):
     __tablename__ = 'CookingData'
     
     ID = Column(Integer, primary_key= True, index= True)
-    Title = Column(String(50))
+    Title = Column(String(500))
     Ingredients = Column(String(5000))
     CookingTime = Column(Integer)
-    Category = Column(String(50))
-    Steps = Column(String(5000)) 
+    Category = Column(String(500))
+    Steps = Column(String(5000))
     
 
 app = FastAPI()
@@ -69,3 +73,53 @@ async def CreateData (CDBO: CookingData, db:db_dependency):
     statement = text("INSERT INTO cookingdata(ID, Title, Ingredients, CookingTime, Category, Steps) VALUES(:ID, :Title, :Ingredients, :CookingTime, :Category, :Steps)")
     db.execute(statement, CDBO)
     db.commit()
+     
+@app.get("/CookingData/GetData", status_code=status.HTTP_200_OK)
+async def GetData(db:db_dependency):
+    statement = text("SELECT * FROM cookingdata.cookingdata")
+    result = db.execute(statement)
+    recipe = result.fetchall()
+    recipe_list = []
+    for i in range(len(recipe)):
+        recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
+        recipe_list.append(recipe_dict)
+    return recipe_list
+
+@app.get("/CookingData/GetIDandTitle", status_code=status.HTTP_200_OK)
+async def GetData(db:db_dependency):
+    statement = text("SELECT cookingdata.ID, cookingdata.Title FROM cookingdata.cookingdata")
+    result = db.execute(statement)
+    recipe = result.fetchall()
+    recipe_list = []
+    for i in range(len(recipe)):
+        recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1]}
+        recipe_list.append(recipe_dict)
+    return recipe_list
+
+@app.get("/CookingData/GetID{ID}", status_code=status.HTTP_200_OK)
+async def GetData(ID: int, db:db_dependency):
+    statement = text("SELECT * FROM cookingdata.cookingdata where ID = :ID")
+    result = db.execute(statement, {'ID': ID})
+    recipe = result.fetchall()
+    recipe_dict = {'ID':recipe[0][0], 'Title':recipe[0][1], 'Ingredients':recipe[0][2], 'CookingTime':recipe[0][3], 'Category':recipe[0][4], 'Steps':recipe[0][5]}
+    return recipe_dict
+
+@app.get("/CookingData/GetCode{Code}", status_code=status.HTTP_200_OK)
+async def GetData(Code: int, db:db_dependency):
+    if Code == 404:
+        raise HTTPException(status_code=Code, detail='The server cannot find the requested resource')
+    else:
+        raise HTTPException(status_code=Code, detail='Data will be Provided Soon')
+
+@app.get("/CookingData/InsertFileData{FielName}", status_code=status.HTTP_200_OK)
+async def InserFielData(FileName: str, db:db_dependency):
+    with open(FileName, 'r') as f: 
+       dict_reader = DictReader(f)
+       entries = list(dict_reader)
+
+    for entry in entries:
+        statement = text("INSERT INTO cookingdata(ID, Title, Ingredients, CookingTime, Category, Steps) VALUES(:ID, :Title, :Ingredients, :CookingTime, :Category, :Steps)")
+        db.execute(statement,entry)
+        db.commit()
+    
+    return "datainsertedsuccesfully"
