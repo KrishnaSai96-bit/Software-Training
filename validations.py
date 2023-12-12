@@ -13,8 +13,8 @@ def string_capitalize(s):
 def string_casefold(s):
     return s.casefold()
 
-def string_find(s):
-    return s.find("Monday")
+def string_find(DataEntered,find_string):
+    return DataEntered.find(find_string)
 
 def string_center(s):
     return s.center(22)
@@ -34,8 +34,8 @@ def string_expandtabs(s):
 def string_format(s):
     return s.format(price = 49)
 
-# def string_format_map(s):
-#     return s.format_map(price = 49)
+def string_format_map(s):
+    return s.format_map()
 
 def string_index(s):
     return s.index("Starting")
@@ -69,11 +69,50 @@ def string_isprintable(s):
 
 def string_isspace(s):
     return s.isspace()
+###########################################################################
+#To find the Domain Name for a given email id we follow the following steps
+#DataEntered = input("Enter a EmailID:")
 
-DataEntered = input("Enter a String:")
+# #for each loop
+# colors = ["blue", "red", "green"]
+# for color in colors:
+#     print(color)
+    
+# # regular loop
+# for i in range(len(colors)):
+#     color = colors[i]
+#     print(color)
+
+
+def domain_name(EmailIDEntered):
+    at_postion = EmailIDEntered.find("@")
+    if (at_postion == -1):
+        domainvalue = "Invalid Email ID"
+    else: 
+        length = len(EmailIDEntered)
+        domainvalue = EmailIDEntered[at_postion+1:length+1]
+    return domainvalue
+#print (domain_name(DataEntered))
+
+##########################################
+def domain_name_arrays(Emails):
+    for i in Emails:
+        domain_value = domain_name(i)
+        print(domain_value)
+        
+EmailID_1 = input("Enter a EmailID1:")
+EmailID_2 = input("Enter a EmailID2:")
+EmailID_3 = input("Enter a EmailID3:")
+EmailID_4 = input("Enter a EmailID4:")
+EmailID_5 = input("Enter a EmailID5:")
+Emails = [EmailID_1, EmailID_2, EmailID_3, EmailID_4, EmailID_5]
+domain_name_arrays(Emails)
+
+# DataEntered = input("Enter a EmailID:")
+# print (domain_name(DataEntered))
 #print (string_capitalize (DataEntered))
 #print (string_casefold (DataEntered))
-#print (string_find (DataEntered))
+#print (string_find (DataEntered, find_string))
 #print (string_center (DataEntered))
 #print (string_count (DataEntered))
 #print (string_encode (DataEntered))
@@ -81,7 +120,7 @@ DataEntered = input("Enter a String:")
 #print (string_expandtabs (DataEntered)) #Doubt
 #print (string_format (DataEntered)) #Doubt
 #print (string_format_map (DataEntered)) #Doubt
-#print (string_index ("Today is Monday and Starting of Every Week is Monday."))
+#print (string_index (DataEntered))
 #print (string_isalnum (DataEntered))
 #print (string_isalpha (DataEntered))
 #print (string_isascii (DataEntered))
@@ -91,7 +130,7 @@ DataEntered = input("Enter a String:")
 #print (string_islower (DataEntered))
 #print (string_isnumeric (DataEntered))
 #print (string_isprintable (DataEntered))
-print (string_isspace ("  "))
+#print (string_isspace ("  "))
 
 
 
