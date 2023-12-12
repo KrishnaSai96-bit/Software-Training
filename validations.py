@@ -52,6 +52,24 @@ def string_isascii(s):
 def string_isdecimal(s):
     return s.isdecimal()
 
+def string_isdigit(s):
+    return s.isdigit()
+
+def string_isidentifier(s):
+    return s.isidentifier()
+
+def string_islower(s):
+    return s.islower()
+
+def string_isnumeric(s):
+    return s.isnumeric()
+
+def string_isprintable(s):
+    return s.isprintable()
+
+def string_isspace(s):
+    return s.isspace()
+
 DataEntered = input("Enter a String:")
 #print (string_capitalize (DataEntered))
 #print (string_casefold (DataEntered))
@@ -67,7 +85,18 @@ DataEntered = input("Enter a String:")
 #print (string_isalnum (DataEntered))
 #print (string_isalpha (DataEntered))
 #print (string_isascii (DataEntered))
-print (string_isdecimal (DataEntered))
+#print (string_isdecimal (DataEntered))
+#print (string_isdigit (DataEntered))
+#print (string_isidentifier (DataEntered))
+#print (string_islower (DataEntered))
+#print (string_isnumeric (DataEntered))
+#print (string_isprintable (DataEntered))
+print (string_isspace ("  "))
+
+
+
+
+
 
 
 
