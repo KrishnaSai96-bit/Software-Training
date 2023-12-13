@@ -21,12 +21,11 @@
 # list[0]
 # sum = sum + list[0]
 
-list = [5,10,15,20,25,30]
-print("The Original List is : " + str(list))
-res = []
-for ele in list:
+def sum_of_list():
+    list = [5,10,15,20,25,30]
     sum = 0
-    for digit in str(ele):
-        sum += int(digit)
-    res.append(sum)
-print ("List Integer Summation : " + str(res))
+    for x in list:
+        sum = sum + x
+    print(sum)
+    
+sum_of_list()
