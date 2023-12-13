@@ -38,7 +38,7 @@ def string_format_map(s):
     return s.format_map()
 
 def string_index(s):
-    return s.index("Starting")
+    return s.index("-")
 
 def string_isalnum(s):
     return s.isalnum()
@@ -69,22 +69,10 @@ def string_isprintable(s):
 
 def string_isspace(s):
     return s.isspace()
+
 ###########################################################################
 #To find the Domain Name for a given email id we follow the following steps
-#DataEntered = input("Enter a EmailID:")
-
-# #for each loop
-# colors = ["blue", "red", "green"]
-# for color in colors:
-#     print(color)
-    
-# # regular loop
-# for i in range(len(colors)):
-#     color = colors[i]
-#     print(color)
-
-
-def domain_name(EmailIDEntered):
+def get_domain_name(EmailIDEntered):
     at_postion = EmailIDEntered.find("@")
     if (at_postion == -1):
         domainvalue = "Invalid Email ID"
@@ -93,22 +81,46 @@ def domain_name(EmailIDEntered):
         domainvalue = EmailIDEntered[at_postion+1:length+1]
     return domainvalue
 #print (domain_name(DataEntered))
-
 ##########################################
 def domain_name_arrays(Emails):
     for i in Emails:
-        domain_value = domain_name(i)
+        domain_value = get_domain_name(i)
         print(domain_value)
-        
-EmailID_1 = input("Enter a EmailID1:")
-EmailID_2 = input("Enter a EmailID2:")
-EmailID_3 = input("Enter a EmailID3:")
-EmailID_4 = input("Enter a EmailID4:")
-EmailID_5 = input("Enter a EmailID5:")
-Emails = [EmailID_1, EmailID_2, EmailID_3, EmailID_4, EmailID_5]
-domain_name_arrays(Emails)
+# EmailID_1 = input("Enter a EmailID1:")
+# EmailID_2 = input("Enter a EmailID2:")
+# EmailID_3 = input("Enter a EmailID3:")
+# EmailID_4 = input("Enter a EmailID4:")
+# EmailID_5 = input("Enter a EmailID5:")
+# Emails = [EmailID_1, EmailID_2, EmailID_3, EmailID_4, EmailID_5]
+# domain_name_arrays(Emails)
+###################################################################
+def validate_credit_card_number(CCNumber):
+    if (len(CCNumber) == 19):
+        if ((CCNumber [4] == '-') and (CCNumber [9] == '-') and (CCNumber [14] == '-')):
+            message = "Valid CC Number is Entered"
+        else:
+            message = "Invalid CC NUmber. Please Enter Dashes(-) after every 4 Numbers"
+    else:
+        message = "Invalid CC NUmber.CC Number must be 19 Digits"
+    return message
+##################################################################
 
-# DataEntered = input("Enter a EmailID:")
+def validate_email_id(EmailID):
+    at_postion = EmailID.find('@')
+    dot_postion = EmailID.rfind('.')
+    print (at_postion)
+    print (dot_postion)
+    if (at_postion > 0 and dot_postion > (at_postion +1)):
+        message = "Valid Email ID is entered"
+    else:
+        message = "Invalid Email ID is Entered"
+    return message
+
+
+
+    
+
+#DataEntered = input("Enter a String:")
 # print (domain_name(DataEntered))
 #print (string_capitalize (DataEntered))
 #print (string_casefold (DataEntered))
