@@ -22,10 +22,19 @@
 # sum = sum + list[0]
 
 def sum_of_list():
-    list = [5,10,15,20,25,30]
+    list = [5,20,7,150,9,12,200]
     sum = 0
     for x in list:
         sum = sum + x
     print(sum)
-    
+    average = sum/len(list)
+    print(average)
+    list.sort()
+    print(list)
+    list.reverse()
+    print(list)
+    list.remove(12)
+    print(list)
+    list.pop(4)
+    print(list)
 sum_of_list()
