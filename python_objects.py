@@ -75,7 +75,21 @@ def object_count(list):
     message2 = "No of Employees are: " + str(len(employee_list)) + " - " + "No of Cars: " + str(len(car_list))
     return message2      
         
-        
+       
+def print_details_from_dict(list):
+    for i in range(len(list)):
+        emp = list[i]
+        name = emp['name']
+        id = emp['id']
+        phone = emp['phone']
+        email = emp['email']
+        print(name)
+        print(id)
+        print(phone)
+        print(email)
+    
+    return
+     
         
         
     

@@ -153,11 +153,13 @@ async def GetData(ID: int, db:db_dependency):
 @app.get("/CookingData/GetIDNoFastAPI/" , status_code=status.HTTP_200_OK)
 async def GetData(db:db_dependency):
     # ID: int
-    MyID = 4
-    statement = text("SELECT * FROM cookingdata.cookingdata where ID = :MyID")
+    input_id = {
+        "MyID" : 4
+    }
+    statement = text("SELECT * FROM cookingdata.cookingdata where ID = :input_id")
     #TODO: Here the except code block is not working and unable to show the exceptions 
     try:    
-        result = db.execute(statement)
+        result = db.execute(statement, input_id)
     except:
         # exc.SQLAlchemyError as e:
         # error = str(e.__dict__['orig'])

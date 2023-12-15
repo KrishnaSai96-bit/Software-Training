@@ -19,18 +19,43 @@ car_1 = python_objects.Car('Kia', 'Seltos', 2020, 'White')
 car_2 = python_objects.Car('Maruthi', 'Brezza', 2017, 'Red')
 car_3 = python_objects.Car('Tata', 'Nexon', 2023, 'Blue')
 
-mixed_list = []
+#mixed_list = []
 
-mixed_list.append(employee_1)
-mixed_list.append(car_1)
-mixed_list.append(employee_2)
-mixed_list.append(employee_3)
-mixed_list.append(car_2)
-mixed_list.append(employee_4)
-mixed_list.append(car_3)
-mixed_list.append(employee_5)
-mixed_list.append(employee_1)
+# mixed_list.append(employee_1)
+# mixed_list.append(car_1)
+# mixed_list.append(employee_2)
+# mixed_list.append(employee_3)
+# mixed_list.append(car_2)
+# mixed_list.append(employee_4)
+# mixed_list.append(car_3)
+# mixed_list.append(employee_5)
+# mixed_list.append(employee_1)
 
-message = python_objects.object_count(mixed_list)
+#message = python_objects.object_count(mixed_list)
 
-print(message)
+#print(message)
+
+#dict menthod
+# emp_1  = {
+#     "name" : "Teja",
+#     "id" : 1,
+#     "phone" : 8978987928,
+#     "email" : "grk.saiteja@yahoo.com"
+# }
+
+# emp_2 = {
+#     "name" : "John",
+#     "id" : 2,
+#     "phone" : 334454392,
+#     "email" : "john@gamil.com"
+# }
+
+emp_1 = vars(employee_1)
+emp_2 = vars(employee_2)
+emp_3 = vars(employee_3)
+emp_4 = vars(employee_4)
+emp_5 = vars(employee_5)
+
+emp_list = [emp_1, emp_2, emp_3, emp_4, emp_5]
+
+python_objects.print_details_from_dict(emp_list)
