@@ -6,14 +6,10 @@ from typing import Annotated
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
-
 from sqlalchemy.sql import text
-
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
-
-
 
 # instantiate app
 app = FastAPI()
@@ -121,7 +117,6 @@ async def get_recipe(recipe_id:int, db:db_dependency):
     return recipe
    
 #Query Method   
-#@app.get("/CookBook/GetRecipeDetails{recipe_id}", status_code=status.HTTP_200_OK) 
 @app.get("/CookBook/GetList", status_code=status.HTTP_200_OK)
 async def get_recipe_details(db:db_dependency):
     statement = text("SELECT recipe.idRECIPE, recipe.RECIPE_Title, recipe.RECIPE_Category, recipe.RECIPE_CookingTime, recipe_details.Ingredients, recipe_details.Recipe_Steps FROM recipe, recipe_details WHERE recipe.idRECIPE = recipe_details.idRECIPE")
