@@ -78,19 +78,42 @@ def get_db_mysql():
 
 db_dependency_mysql = Annotated[Session, Depends(get_db_mysql)]
 
-@app.get("/CookingData/GetCookingData", status_code=status.HTTP_200_OK)
-async def GetData(db:db_dependency_mysql):
+# @app.get("/CookingData/GetCookingData", status_code=status.HTTP_200_OK)
+# async def GetData(db:db_dependency_mysql):
+#     statement = text("SELECT * FROM cookingdata.cookingdata")
+#     result = db.execute(statement)
+#     recipe = result.fetchall()
+#     recipe_list = []
+#     for i in range(len(recipe)):
+#         recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
+#         recipe_list.append(recipe_dict)
+#     ########################
+#     for recipe in recipe_list:
+#         with open('RecipeBook.csv', 'w') as f:
+#             w = csv.DictWriter(f, recipe.keys())
+#             w.writerows(recipe_list)
+#     ########################
+#     return recipe_list
+
+
+@app.get("/CookingData/GetCookingDataFromMySQLandWriteToPostgres", status_code=status.HTTP_200_OK)
+async def GetData(db:db_dependency_mysql, db1:db_dependency_postgres):
     statement = text("SELECT * FROM cookingdata.cookingdata")
     result = db.execute(statement)
     recipe = result.fetchall()
     recipe_list = []
     for i in range(len(recipe)):
-        recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
+        recipe_dict = {'id':recipe[i][0], 'title':recipe[i][1], 'ingredients':recipe[i][2], 'cookingtime':recipe[i][3], 'category':recipe[i][4], 'steps':recipe[i][5]}
+        #db = db_dependency_postgres
+        print(recipe_dict)
+        statement = text("INSERT INTO cooking_data(id, title, ingredients, cookingtime, category, steps) VALUES(:id, :title, :ingredients, :cookingtime, :category, :steps)")
+        db1.execute(statement, recipe_dict)
+        db1.commit()
         recipe_list.append(recipe_dict)
-    ########################
-    for employee in recipe_list:
+    #######################
+    for recipe in recipe_list:
         with open('RecipeBook.csv', 'w') as f:
-            w = csv.DictWriter(f, employee.keys())
+            w = csv.DictWriter(f, recipe.keys())
             w.writerows(recipe_list)
     ########################
     return recipe_list

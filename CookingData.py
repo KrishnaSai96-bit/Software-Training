@@ -90,6 +90,18 @@ async def GetData(db:db_dependency):
         recipe_list.append(recipe_dict)
     return recipe_list
 
+#ORM MethodTODO
+# @app.get("/CookingData/GetData_ORM", status_code=status.HTTP_200_OK)
+# async def GetData(db:db_dependency):
+#     statement = text("SELECT * FROM cookingdata.cookingdata")
+#     result = db.execute(statement)
+#     recipe = result.fetchall()
+#     recipe_list = []
+#     for i in range(len(recipe)):
+#         recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
+#         recipe_list.append(recipe_dict)
+#     return recipe_list
+
 @app.get("/CookingData/GetIDandTitle", status_code=status.HTTP_200_OK)
 async def GetData(db:db_dependency):
     try: 
