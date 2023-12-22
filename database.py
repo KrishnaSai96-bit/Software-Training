@@ -6,7 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 #base class that allows to create other 
 #classes in the model
 
-URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/recipe'
+#URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/recipe'
+
+URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/blog'
 
 engine = create_engine(URL_DATABASE)
 

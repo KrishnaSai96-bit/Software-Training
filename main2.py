@@ -3,22 +3,30 @@
 from fastapi import FastAPI, HTTPException, Depends, status, Response
 from pydantic import BaseModel #data validation
 from typing import Annotated
-import models
+import models2
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
-
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.sql import text
 
 
 # instantiate app
 app = FastAPI()
-models.Base.metadata.create_all(bind=engine) #creates tables in MySQL database based on the definitions in model.py
+origins = ['http://localhost:3000',]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ['*'],
+    allow_headers = ['*']
+)
+
+models2.Base.metadata.create_all(bind=engine) #creates tables in MySQL database based on the definitions in model.py
 
 class PostBase(BaseModel):
     title: str
     content: str
     user_id: int
-    comments: str
 
 class UserBase(BaseModel):
     username: str
@@ -39,10 +47,21 @@ async def create_post(post: PostBase, db:db_dependency):
     post = post.model_dump()
     # db.add(db_post)
     # db.commit()
-    statement = text("INSERT INTO posts(title, content, user_id, comments) VALUES(:title, :content, :user_id, :comments)")
+    statement = text("INSERT INTO posts(title, content, user_id) VALUES(:title, :content, :user_id)")
     #by writing a sql stmt (native sql)
     db.execute(statement, post)
     db.commit()
+
+@app.get("/posts/", status_code=status.HTTP_200_OK)
+async def get_all_posts(db:db_dependency):
+    statement = text("SELECT * FROM posts")
+    result = db.execute(statement)
+    post = result.fetchall()
+    all_posts = []
+    for i in range(len(post)):
+        post_dict = {'id':post[i][0], 'title':post[i][1], 'content':post[i][2], 'user_id':post[i][3]}
+        all_posts.append(post_dict)
+    return all_posts
 
 #api name is posts
 #end point name is get
@@ -70,7 +89,7 @@ async def read_post(post_id:int, db:db_dependency):
 #returns null
 @app.delete("/posts/{post_id}", status_code=status.HTTP_200_OK)
 async def delete_post(post_id: int, db:db_dependency):
-    db_post = db.query(models.Post).filter(models.Post.id == post_id).first()
+    db_post = db.query(models2.Post).filter(models2.Post.id == post_id).first()
     if db_post is None:
         raise HTTPException(status_code=404, detail='Post was not found')
     db.delete(db_post)
@@ -78,13 +97,13 @@ async def delete_post(post_id: int, db:db_dependency):
 
 @app.post("/users/", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserBase, db: db_dependency):
-    db_user = models.User(**user.model_dump()) #get all data and de-serialize it into user object
+    db_user = models2.User(**user.model_dump()) #get all data and de-serialize it into user object
     db.add(db_user)
     db.commit()
 
 @app.get("/users/{user_id}", status_code=status.HTTP_200_OK)
 async def read_user(user_id:int, db:db_dependency):
-    user = db.query(models.User).filter(models.User.id == user_id).first() #return first entry in db that matches this filter
+    user = db.query(models2.User).filter(models2.User.id == user_id).first() #return first entry in db that matches this filter
     if user is None:
         raise HTTPException(status_code=404, detail='User not found')
     return user
