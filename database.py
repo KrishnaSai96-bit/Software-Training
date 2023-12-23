@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 #URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/recipe'
 
-URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/blog'
+URL_DATABASE = 'mysql+pymysql://root:Krishna@localhost:3306/recipe'
 
 engine = create_engine(URL_DATABASE)
 
