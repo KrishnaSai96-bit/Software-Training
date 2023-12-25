@@ -4,12 +4,7 @@ import api from './api'
 const App = () => {
   const [cookingdata, setCookingdata] = useState([]);
   const [formData, setFormData] = useState({
-    ID: '',
-    Title: '',
-    Ingredients: '',
-    CookingTime: '',
-    Category: '',
-    Steps: '',
+    ID: ''
   });
 
   // const fetchPosts = async () => {
@@ -17,12 +12,18 @@ const App = () => {
   //   setPosts(response.data);
   // }
 
-  const fetchCookingdata = async () => {
+  const fetchCookingdata = async (buttonValue) => {
     // try {
       // Add query parameter to the URL if 'id' is provided
-      //const url = ID ? `/CookingData/?ID=${ID}` : '/CookingData/';
-      const url = '/CookingData/GetData';
-      const response = await api.get(url);
+      //const url = '/CookingData/GetData';
+      //const response = await api.get(url);
+      let response;
+      if (buttonValue === 'getById') {
+        response = await api.get(`/CookingData/GetID${formData.ID}`);
+      }
+      else if (buttonValue === 'getAllRecipes') {
+        response = await api.get('/CookingData/GetData');
+    }
       setCookingdata(response.data);
     // } catch (error) {
     //   setError(error);
@@ -30,7 +31,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    fetchCookingdata();
+    //fetchCookingdata();
   }, []);
 
   const handleInputChange = (event) => {
@@ -42,33 +43,38 @@ const App = () => {
   };
 
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    await api.post('/CookingData/CreateData', formData);
-    fetchCookingdata(); // re-call all posts from db
-    setFormData({
-      ID: '',
-      Title: '',
-      Ingredients: '',
-      CookingTime: '',
-      Category: '',
-      Steps: '',
-    });
-  };
+//   const handle_GetRecipes_ByID = async (event) => {
+//     //event.preventDefault();
+//     fetchCookingdata('getById');
+//   };
 
+//   const handle_GetAllRecipes = async (event) => {
+//     //event.preventDefault();
+//     fetchCookingdata('getAllRecipes');
+//   };
+
+  const handleButtonClick = async (buttonValue)  => {
+    if (buttonValue === 'getById'){
+        fetchCookingdata('getById');
+      }
+      else if (buttonValue === 'getAllRecipes') {
+        fetchCookingdata('getAllRecipes');
+      }
+  }
+  
 
   return (
     <div>
       <nav className='navbar navbar-dark bg-primary'>
         <div className='container-fluid'>
           <a className='navbar-brand' href="#">
-            Cook Book
+            Cook Book - RECIEP BY ID
           </a>
         </div>
       </nav>
 
       <div className='container'>
-        <form onSubmit={handleFormSubmit}>
+        <form>
 
           <div className='mb-3 mt-3'>
             <label htmlFor='ID' className='form-label'>
@@ -77,43 +83,12 @@ const App = () => {
             <input type='text' className='form-control' ID='ID' name='ID' onChange={handleInputChange} value={formData.ID}/>
           </div>
 
-          <div className='mb-3 mt-3'>
-            <label htmlFor='Title' className='form-label'>
-              Title
-            </label>
-            <input type='text' className='form-control' id='Title' name='Title' onChange={handleInputChange} value={formData.Title}/>
-          </div>
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getById')}>
+            Get Recipe By ID
+          </button> 
 
-          <div className='mb-3 mt-3'>
-            <label htmlFor='Ingredients' className='form-label'>
-            Ingredients
-            </label>
-            <input type='text' className='form-control' id='Ingredients' name='Ingredients' onChange={handleInputChange} value={formData.Ingredients}/>
-          </div>
-
-          <div className='mb-3 mt-3'>
-            <label htmlFor='CookingTime' className='form-label'>
-            CookingTime
-            </label>
-            <input type='text' className='form-control' id='CookingTime' name='CookingTime' onChange={handleInputChange} value={formData.CookingTime}/>
-          </div>
-
-          <div className='mb-3 mt-3'>
-            <label htmlFor='Category' className='form-label'>
-            Category
-            </label>
-            <input type='text' className='form-control' id='Category' name='Category' onChange={handleInputChange} value={formData.Category}/>
-          </div>
-
-          <div className='mb-3 mt-3'>
-            <label htmlFor='Steps' className='form-label'>
-            Steps
-            </label>
-            <input type='text' className='form-control' id='Steps' name='Steps' onChange={handleInputChange} value={formData.Steps}/>
-          </div>
-
-          <button type='submit' className='btn btn-primary'>
-            Submit
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')}>
+            Get All Recipes
           </button>
 
         </form>
