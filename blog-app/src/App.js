@@ -95,6 +95,8 @@ const App = () => {
             <input type='text' className='form-control' id='Category' name='Category' onChange={handleInputChange} value={formData.Category} style={{ width: '100px' }}/>
           </div>
 
+          <br></br>
+          
           <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')} style={{ marginRight: '15px' }}>
             Get All Recipes
           </button>
