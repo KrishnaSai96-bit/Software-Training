@@ -7,6 +7,14 @@ const App = () => {
     ID: '',
     Category: ''
   });
+  const [cookingdataform4insert, setCookingdataform4insert] = useState({
+    ID: '',
+    Title: '',
+    Ingredients: '',
+    CookingTime: '',
+    Category: '',
+    Steps: ''
+  });
 
   const fetchCookingdata = async (buttonValue) => {
 
@@ -20,8 +28,20 @@ const App = () => {
       else if (buttonValue === 'getByCategory') {
         response = await api.get(`/CookingData/GetRecipe_UsingCategory${formData.Category}`);
       }
-    }
+      else if (buttonValue === 'insertRecipe') {
+        await api.post('/CookingData/CreateData', cookingdataform4insert);
+        response = await api.get(`/CookingData/GetID${cookingdataform4insert.ID}`);
+        setCookingdataform4insert({
+          ID: '',
+          Title: '',
+          Ingredients: '',
+          CookingTime: '',
+          Category: '',
+          Steps: ''
+        });
+      }
       setCookingdata(response.data);
+    }
 
   useEffect(() => {
     //fetchCookingdata();
@@ -33,18 +53,27 @@ const App = () => {
       ...formData,
       [event.target.name]: value,
     });
+    setCookingdataform4insert({
+      ...cookingdataform4insert,
+      [event.target.name]: value,
+    });
   };
 
-
-//   const handle_GetRecipes_ByID = async (event) => {
-//     //event.preventDefault();
-//     fetchCookingdata('getById');
-//   };
-
-//   const handle_GetAllRecipes = async (event) => {
-//     //event.preventDefault();
-//     fetchCookingdata('getAllRecipes');
-//   };
+  // const handleFormSubmit = async (event) => {
+  //   event.preventDefault();
+  //   console.log('bunnu');
+  //   console.log(cookingdataform4insert);
+  //   await api.post('/CookingData/CreateData', cookingdataform4insert);
+  //   fetchCookingdata();
+  //   setCookingdataform4insert({
+  //     ID: '',
+  //     Title: '',
+  //     Ingredients: '',
+  //     CookingTime: '',
+  //     Category: '',
+  //     Steps: ''
+  //   });
+  // };
 
   const handleButtonClick = async (buttonValue)  => {
     if (buttonValue === 'getById'){
@@ -57,6 +86,10 @@ const App = () => {
 
       else if (buttonValue === 'getByCategory') {
         fetchCookingdata('getByCategory');
+      }
+
+      else if (buttonValue === 'insertRecipe') {
+        fetchCookingdata('insertRecipe');
       }
   }
   
@@ -78,30 +111,87 @@ const App = () => {
             <label htmlFor='ID' className='form-label'>
               ID
             </label>
-            <input type='text' className='form-control' ID='ID' name='ID' onChange={handleInputChange} value={formData.ID}/>
+            <input type='text' className='form-control' ID='ID' name='ID' onChange={handleInputChange} value={formData.ID} style={{ width: '100px' }}/>
           </div>
           
           <div className='mb-3 mt-3'>
             <label htmlFor='Category' className='form-label'>
             Category
             </label>
-            <input type='text' className='form-control' id='Category' name='Category' onChange={handleInputChange} value={formData.Category}/>
+            <input type='text' className='form-control' id='Category' name='Category' onChange={handleInputChange} value={formData.Category} style={{ width: '100px' }}/>
           </div>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getById')}>
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getById')} style={{ marginRight: '15px' }}>
             Get Recipe By ID
           </button> 
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')}>
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')} style={{ marginRight: '15px' }}>
             Get All Recipes
           </button>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getByCategory')}>
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getByCategory')} style={{ marginRight: '15px' }}>
             Get Recipes By Category
           </button>
 
         </form>
 
+        <br></br>
+
+        <form>
+
+          <a className='navbar-brand'>
+            Insert New Recipe
+          </a>
+
+          <div className='mb-3 mt-3'>
+            <label htmlFor='ID' className='form-label'>
+              New ID
+            </label>
+            <input type='text' className='form-control' ID='ID' name='ID' onChange={handleInputChange} value={cookingdataform4insert.ID}/>
+          </div>
+
+          <div className='mb-3 mt-3'>
+            <label htmlFor='Title' className='form-label'>
+              New Title
+            </label>
+            <input type='text' className='form-control' id='Title' name='Title' onChange={handleInputChange} value={cookingdataform4insert.Title}/>
+          </div>
+
+          <div className='mb-3 mt-3'>
+            <label htmlFor='Ingredients' className='form-label'>
+            New Ingredients
+            </label>
+            <input type='text' className='form-control' id='Ingredients' name='Ingredients' onChange={handleInputChange} value={cookingdataform4insert.Ingredients}/>
+          </div>
+
+          <div className='mb-3 mt-3'>
+            <label htmlFor='CookingTime' className='form-label'>
+            New CookingTime
+            </label>
+            <input type='text' className='form-control' id='CookingTime' name='CookingTime' onChange={handleInputChange} value={cookingdataform4insert.CookingTime}/>
+          </div>
+
+          <div className='mb-3 mt-3'>
+            <label htmlFor='Category' className='form-label'>
+            New Category
+            </label>
+            <input type='text' className='form-control' id='Category' name='Category' onChange={handleInputChange} value={cookingdataform4insert.Category}/>
+          </div>
+
+          <div className='mb-3 mt-3'>
+            <label htmlFor='Steps' className='form-label'>
+            New Steps
+            </label>
+            <input type='text' className='form-control' id='Steps' name='Steps' onChange={handleInputChange} value={cookingdataform4insert.Steps}/>
+          </div>
+          
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('insertRecipe')}>
+           Insert Recipe
+          </button>
+
+        <br></br>
+
+        </form>
         <table className='table table-striped table-bordered table-hover'>
           <thead>
             <tr>
@@ -132,4 +222,6 @@ const App = () => {
     </div>
   )
 }
+
+
 export default App;

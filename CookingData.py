@@ -152,21 +152,13 @@ async def GetData(ID: int, db:db_dependency):
 async def GetData(Category: str, db:db_dependency):
     statement = text("SELECT * FROM cookingdata.cookingdata where Category = :Category")
     #TODO: Here the except code block is not working and unable to show the exceptions 
-    try:    
-        result = db.execute(statement, {'Category': Category})
-    except:
-        # exc.SQLAlchemyError as e:
-        # error = str(e.__dict__['orig'])
-        print ("BUNNU")
-        # print (error)    
-    else:
-        recipe = result.fetchall()
-        recipe_dict = {'ID':recipe[0][0], 'Title':recipe[0][1], 'Ingredients':recipe[0][2], 'CookingTime':recipe[0][3], 'Category':recipe[0][4], 'Steps':recipe[0][5]}
-    finally:
-        recipe_list = []
+    result = db.execute(statement, {'Category': Category})
+    recipe = result.fetchall()
+    recipe_list = []
+    for i in range(len(recipe)):
+        recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
         recipe_list.append(recipe_dict)
-        return recipe_list
-        #return recipe_dict
+    return recipe_list
        
 # @app.get("/CookingData/GetCode{Code}", status_code=status.HTTP_200_OK)
 # async def GetData(Code: int, db:db_dependency):
