@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "ag-grid-react": "^31.0.1",
     "env": "^0.0.2",
     "pip": "^0.0.1",
     "python": "^0.0.4"
