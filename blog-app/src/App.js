@@ -8,7 +8,8 @@ const App = () => {
   const [cookingdata, setCookingdata] = useState([]);
   const [formData, setFormData] = useState({
     ID: '',
-    Category: ''
+    Category: '',
+    CookingTime: ''
   });
 
   const fetchCookingdata = async (buttonValue) => {
@@ -23,12 +24,14 @@ const App = () => {
       else if (buttonValue === 'getByCategory') {
         response = await api.get(`/CookingData/GetRecipe_UsingCategory${formData.Category}`);
       }
+      else if (buttonValue === 'getByCookingTime') {
+        response = await api.get(`/CookingData/GetRecipe_UsingCookingTime${formData.CookingTime}`);
+      }
     
       setCookingdata(response.data);
     }
 
   useEffect(() => {
-    //fetchCookingdata();
   }, []);
 
   const handleInputChange = (event) => {
@@ -51,6 +54,10 @@ const App = () => {
 
       else if (buttonValue === 'getByCategory') {
         fetchCookingdata('getByCategory');
+      }
+
+      else if (buttonValue === 'getByCookingTime') {
+        fetchCookingdata('getByCookingTime');
       }
 
   }
@@ -95,6 +102,13 @@ const App = () => {
             <input type='text' className='form-control' id='Category' name='Category' onChange={handleInputChange} value={formData.Category} style={{ width: '100px' }}/>
           </div>
 
+          <div className='mb-3 mt-3'>
+            <label htmlFor='CookingTime' className='form-label'>
+            Cooking Time
+            </label>
+            <input type='text' className='form-control' id='CookingTime' name='CookingTime' onChange={handleInputChange} value={formData.CookingTime} style={{ width: '100px' }}/>
+          </div>
+
           <br></br>
           
           <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')} style={{ marginRight: '15px' }}>
@@ -121,7 +135,7 @@ const App = () => {
 
         <br></br>
 
-        <div className="ag-theme-quartz" style={{ height: 300}}>
+        <div className="ag-theme-quartz" style={{ height: 500}}>
           <AgGridReact rowData={cookingdata} columnDefs={colDefs}/>
         </div>
       </div>

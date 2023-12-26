@@ -101,6 +101,15 @@ async def GetData(db:db_dependency):
         recipe_list.append(recipe_dict)
     return recipe_list
 
+#To be completed
+@app.put("/posts/{id}", status_code=status.HTTP_200_OK)
+async def update_post(id: int, post: Base, db:db_dependency):
+    post = post.model_dump()
+    post['input_id'] = id
+    statement = text("UPDATE employee_data SET CookingTime =:CookingTime WHERE ID =:input_id")
+    db.execute(statement, post)
+    
+    
 #ORM MethodTODO
 # @app.get("/CookingData/GetData_ORM", status_code=status.HTTP_200_OK)
 # async def GetData(db:db_dependency):
@@ -131,7 +140,6 @@ async def GetData(db:db_dependency):
 @app.get("/CookingData/GetID{ID}", status_code=status.HTTP_200_OK)
 async def GetData(ID: int, db:db_dependency):
     statement = text("SELECT * FROM cookingdata.cookingdata where ID = :ID")
-    #TODO: Here the except code block is not working and unable to show the exceptions 
     try:    
         result = db.execute(statement, {'ID': ID})
     except:
@@ -151,7 +159,6 @@ async def GetData(ID: int, db:db_dependency):
 @app.get("/CookingData/GetRecipe_UsingCategory{Category}", status_code=status.HTTP_200_OK)
 async def GetData(Category: str, db:db_dependency):
     statement = text("SELECT * FROM cookingdata.cookingdata where Category = :Category")
-    #TODO: Here the except code block is not working and unable to show the exceptions 
     result = db.execute(statement, {'Category': Category})
     recipe = result.fetchall()
     recipe_list = []
@@ -159,7 +166,18 @@ async def GetData(Category: str, db:db_dependency):
         recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
         recipe_list.append(recipe_dict)
     return recipe_list
-       
+
+@app.get("/CookingData/GetRecipe_UsingCookingTime{CookingTime}", status_code=status.HTTP_200_OK)
+async def GetData(CookingTime: int, db:db_dependency):
+    statement = text("SELECT * FROM cookingdata.cookingdata where CookingTime >= :CookingTime")
+    result = db.execute(statement, {'CookingTime': CookingTime})
+    recipe = result.fetchall()
+    recipe_list = []
+    for i in range(len(recipe)):
+        recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
+        recipe_list.append(recipe_dict)
+    return recipe_list
+
 # @app.get("/CookingData/GetCode{Code}", status_code=status.HTTP_200_OK)
 # async def GetData(Code: int, db:db_dependency):
 #     detail = matchstatement.DisplayErrorCode(Code)
