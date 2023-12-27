@@ -11,7 +11,8 @@ const App = () => {
     Category: '',
     CookingTime: ''
   });
-
+  
+  let updated_data = null;
   const fetchCookingdata = async (buttonValue) => {
 
       let response;
@@ -27,7 +28,14 @@ const App = () => {
       else if (buttonValue === 'getByCookingTime') {
         response = await api.get(`/CookingData/GetRecipe_UsingCookingTime${formData.CookingTime}`);
       }
-    
+      else if (buttonValue === 'SaveData') {
+        console.log(updated_data)
+        await api.put(`/CookingData/Update_CookingData/${updated_data.ID}`, updated_data);
+        return;
+      }
+      else{
+        response = await api.get(`/CookingData/GetID${formData.ID}`);
+      }
       setCookingdata(response.data);
     }
 
@@ -41,6 +49,11 @@ const App = () => {
       [event.target.name]: value,
     });
   
+  };
+
+  const handleCellValueChanged = async (params) => {
+    updated_data = params.data;
+    console.log(updated_data);
   };
 
   const handleButtonClick = async (buttonValue)  => {
@@ -60,19 +73,23 @@ const App = () => {
         fetchCookingdata('getByCookingTime');
       }
 
+      else if (buttonValue === 'SaveData') {
+        fetchCookingdata('SaveData');
+      }
+
   }
 
   // const [rowData, setRowData] = useState([
   //   { ID: "Voyager", Title: "NASA", Ingredients: "Ingredients", CookingTime: "1977-09-05", Category: "Category", Steps: "Steps" },
   // ]);
-  
+  const gridOptions = {rowSelection: 'multiple', pagination: true}
   const [colDefs, setColDefs] = useState([
-    { field: "ID", editable: true},
-    { field: "Title", editable: true},
-    { field: "Ingredients", editable: true},
-    { field: "CookingTime", editable: true},
-    { field: "Category", editable: true},
-    { field: "Steps",editable: true}
+    { field: "ID", editable: true, filter: true, pinned: 'left', cellDataType: 'number'},
+    { field: "Title", editable: true, filter: true, pinned: 'left', cellDataType: 'text'},
+    { field: "Ingredients", editable: true, filter: true, cellDataType: 'text'},
+    { field: "CookingTime", editable: true, filter: true, cellDataType: 'number'},
+    { field: "Category", editable: true, filter: true, cellDataType: 'text'},
+    { field: "Steps",editable: true, filter: true, cellDataType: 'text'}
   ]);
 
   return (
@@ -136,12 +153,11 @@ const App = () => {
         <br></br>
 
         <div className="ag-theme-quartz" style={{ height: 500}}>
-          <AgGridReact rowData={cookingdata} columnDefs={colDefs}/>
+          <AgGridReact rowData={cookingdata} columnDefs={colDefs} onCellValueChanged={handleCellValueChanged} onClick={() => handleButtonClick('SaveData')}/>
         </div>
       </div>
     </div>
   )
 }
-
 
 export default App;

@@ -101,13 +101,13 @@ async def GetData(db:db_dependency):
         recipe_list.append(recipe_dict)
     return recipe_list
 
-#To be completed
-@app.put("/posts/{id}", status_code=status.HTTP_200_OK)
-async def update_post(id: int, post: Base, db:db_dependency):
-    post = post.model_dump()
-    post['input_id'] = id
-    statement = text("UPDATE employee_data SET CookingTime =:CookingTime WHERE ID =:input_id")
-    db.execute(statement, post)
+@app.put("/CookingData/Update_CookingData/{ID}", status_code=status.HTTP_200_OK)
+async def Update_CookingData(ID: int, cookingdataBO: CookingData, db:db_dependency):
+    cookingdataBO = cookingdataBO.model_dump()
+    cookingdataBO['ID'] = ID
+    statement = text("UPDATE cookingdata.cookingdata SET Category = :Category WHERE ID =:ID")
+    db.execute(statement, cookingdataBO)
+    db.commit()
     
     
 #ORM MethodTODO
