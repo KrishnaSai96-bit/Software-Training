@@ -105,7 +105,7 @@ async def GetData(db:db_dependency):
 async def Update_CookingData(ID: int, cookingdataBO: CookingData, db:db_dependency):
     cookingdataBO = cookingdataBO.model_dump()
     cookingdataBO['ID'] = ID
-    statement = text("UPDATE cookingdata.cookingdata SET Category = :Category WHERE ID =:ID")
+    statement = text("UPDATE cookingdata.cookingdata SET Title = :Title, Ingredients = :Ingredients, CookingTime = :CookingTime, Category = :Category, Steps = :Steps WHERE ID =:ID")
     db.execute(statement, cookingdataBO)
     db.commit()
     
@@ -166,6 +166,7 @@ async def GetData(Category: str, db:db_dependency):
         recipe_dict = {'ID':recipe[i][0], 'Title':recipe[i][1], 'Ingredients':recipe[i][2], 'CookingTime':recipe[i][3], 'Category':recipe[i][4], 'Steps':recipe[i][5]}
         recipe_list.append(recipe_dict)
     return recipe_list
+
 
 @app.get("/CookingData/GetRecipe_UsingCookingTime{CookingTime}", status_code=status.HTTP_200_OK)
 async def GetData(CookingTime: int, db:db_dependency):

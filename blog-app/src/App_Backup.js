@@ -1,20 +1,10 @@
-'use strict';
-
-import React, {
-  useState, 
-  useEffect,
-  useCallback,
-  useMemo,
-  useRef,
-  StrictMode,
-} from 'react' //useState and useEffect are hooks used to call api endpoints
+import React, {useState, useEffect} from 'react' //useState and useEffect are hooks used to call api endpoints
 import api from './api'
 import { AgGridReact } from 'ag-grid-react'; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 
 const App = () => {
-  const gridRef = useRef();
   const [cookingdata, setCookingdata] = useState([]);
   const [formData, setFormData] = useState({
     ID: '',
@@ -23,8 +13,6 @@ const App = () => {
   });
   
   let updated_data = null;
-  let selected_row_data = null;
-  let add_index;
   const fetchCookingdata = async (buttonValue) => {
 
       let response;
@@ -41,13 +29,8 @@ const App = () => {
         response = await api.get(`/CookingData/GetRecipe_UsingCookingTime${formData.CookingTime}`);
       }
       else if (buttonValue === 'SaveData') {
-        const selectedData = gridRef.current.api.getSelectedRows();
-        for (var i = 0; i < selectedData.length; i++){
-          selected_row_data = selectedData[i];
-          console.log(selected_row_data);
-          await api.put(`/CookingData/Update_CookingData/${selected_row_data.ID}`, selected_row_data);
-        }
-          
+        console.log(updated_data)
+        await api.put(`/CookingData/Update_CookingData/${updated_data.ID}`, updated_data);
         return;
       }
       else{
@@ -68,10 +51,10 @@ const App = () => {
   
   };
 
-  // const handleCellValueChanged = async (params) => {
-  //   updated_data = params.data;
-  //   console.log(updated_data);
-  // };
+  const handleCellValueChanged = async (params) => {
+    updated_data = params.data;
+    console.log(updated_data);
+  };
 
   const handleButtonClick = async (buttonValue)  => {
     if (buttonValue === 'getById'){
@@ -99,7 +82,7 @@ const App = () => {
   // const [rowData, setRowData] = useState([
   //   { ID: "Voyager", Title: "NASA", Ingredients: "Ingredients", CookingTime: "1977-09-05", Category: "Category", Steps: "Steps" },
   // ]);
-  // const gridOptions = {rowSelection: 'multiple', pagination: true}
+  const gridOptions = {rowSelection: 'multiple', pagination: true}
   const [colDefs, setColDefs] = useState([
     { field: "ID", editable: true, filter: true, pinned: 'left', cellDataType: 'number'},
     { field: "Title", editable: true, filter: true, pinned: 'left', cellDataType: 'text'},
@@ -108,56 +91,6 @@ const App = () => {
     { field: "Category", editable: true, filter: true, cellDataType: 'text'},
     { field: "Steps",editable: true, filter: true, cellDataType: 'text'}
   ]);
-
-  const createNewRowData = () => {
-    const newData = {
-      ID: 1,
-      Title: 'Dosa',
-      Ingredients: 'Dosa',
-      CookingTime: 30,
-      Category: 'Dosa',
-      Steps: 'Dosa'
-    };
-    return newData;
-  }
-
-  const onRemoveSelected = useCallback(() => {
-    const selectedData = gridRef.current.api.getSelectedRows();
-    const res = gridRef.current.api.applyTransaction({remove: selectedData});
-  }, []);
-
-  const addItems = useCallback((addIndex) => {
-    add_index =  gridRef.current.api.getSelectedRows();
-    const newItems = [
-      createNewRowData()
-    ];
-    const res = gridRef.current.api.applyTransaction({
-      add: newItems,
-      addIndex: addIndex
-    });
-  }, []);
-
- 
-
-  const clearData = useCallback(() => {
-    const rowData = [];
-    gridRef.current.api.forEachNode(function (node) {
-      rowData.push(node.data);
-    });
-    const res = gridRef.current.api.applyTransaction({
-      remove: rowData,
-    });
-  }, []);
-
-  const getRowData = useCallback(() => {
-    const rowData = [];
-    gridRef.current.api.forEachNode(function (node) {
-      rowData.push(node.data);
-    });
-    console.log('Row Data:');
-    console.table(rowData);
-  }, []);
-
 
   return (
     <div>
@@ -211,42 +144,16 @@ const App = () => {
             Get Recipes By Cooking Time
           </button>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('InsertData')} style={{ marginRight: '15px', backgroundColor: 'magenta'}}>
-            Insert Data
-          </button>
-
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UpdateData')} style={{ marginRight: '15px', backgroundColor: 'green'}}>
-            Update Data
-          </button>
-
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('DeleteData')} style={{ marginRight: '15px', backgroundColor: 'grey'}}>
-            Delete Data
-          </button>
-
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UploadData')} style={{ marginRight: '15px', backgroundColor: 'red'}}>
-            Upload Data
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('SaveData')} style={{ marginRight: '15px', backgroundColor: 'green'}}>
+            Save Data
           </button>
 
         </form>
 
         <br></br>
 
-        <button onClick={() => addItems(undefined)}>Add Items</button><br></br>
-        <button onClick={onRemoveSelected}>Remove Selected</button><br></br>
-        <button onClick={clearData}>Clear Data</button><br></br>
-        <button onClick={getRowData}>Get Row Data</button>
-
-
         <div className="ag-theme-quartz" style={{ height: 500}}>
-          <AgGridReact 
-          ref={gridRef}
-          rowData={cookingdata} 
-          columnDefs={colDefs} 
-          //onCellValueChanged={handleCellValueChanged}
-          onClick={() => handleButtonClick('SaveData')} 
-          rowSelection={'multiple'}
-          pagination={true}
-          />
+          <AgGridReact rowData={cookingdata} columnDefs={colDefs} onCellValueChanged={handleCellValueChanged} onClick={() => handleButtonClick('SaveData')}/>
         </div>
       </div>
     </div>
