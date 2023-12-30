@@ -149,16 +149,6 @@ const App = () => {
     });
   }, []);
 
-  const getRowData = useCallback(() => {
-    const rowData = [];
-    gridRef.current.api.forEachNode(function (node) {
-      rowData.push(node.data);
-    });
-    console.log('Row Data:');
-    console.table(rowData);
-  }, []);
-
-
   return (
     <div>
       <nav className='navbar navbar-dark bg-primary'>
@@ -227,15 +217,18 @@ const App = () => {
             Upload Data
           </button>
 
+          <button type='button' className='btn btn-primary' onClick={() => addItems(undefined)} style={{ marginRight: '15px' }}>Add Items</button>
+        
+          <button type='button' className='btn btn-primary' onClick={onRemoveSelected} style={{ marginRight: '15px' }}>Remove Selected</button>
+        
+          <button type='button' className='btn btn-primary' onClick={clearData}>Clear Data</button>
+
+
         </form>
 
         <br></br>
 
-        <button onClick={() => addItems(undefined)}>Add Items</button><br></br>
-        <button onClick={onRemoveSelected}>Remove Selected</button><br></br>
-        <button onClick={clearData}>Clear Data</button><br></br>
-        <button onClick={getRowData}>Get Row Data</button>
-
+        
 
         <div className="ag-theme-quartz" style={{ height: 500}}>
           <AgGridReact 
