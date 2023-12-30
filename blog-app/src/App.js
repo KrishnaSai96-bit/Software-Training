@@ -201,6 +201,10 @@ const App = () => {
             Get Recipes By Cooking Time
           </button>
 
+          <br></br>
+
+          <br></br>
+
           <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('InsertData')} style={{ marginRight: '15px', backgroundColor: 'magenta'}}>
             Insert Data
           </button>
@@ -217,18 +221,15 @@ const App = () => {
             Upload Data
           </button>
 
-          <button type='button' className='btn btn-primary' onClick={() => addItems(undefined)} style={{ marginRight: '15px' }}>Add Items</button>
-        
-          <button type='button' className='btn btn-primary' onClick={onRemoveSelected} style={{ marginRight: '15px' }}>Remove Selected</button>
-        
-          <button type='button' className='btn btn-primary' onClick={clearData}>Clear Data</button>
-
-
         </form>
 
         <br></br>
 
+        <button type='button' className='btn btn-primary' onClick={() => addItems(undefined)} style={{ marginRight: '15px' }}>Add Items</button>
         
+        <button type='button' className='btn btn-primary' onClick={onRemoveSelected} style={{ marginRight: '15px' }}>Remove Selected</button>
+        
+        <button type='button' className='btn btn-primary' onClick={clearData}>Clear Data</button>
 
         <div className="ag-theme-quartz" style={{ height: 500}}>
           <AgGridReact 
