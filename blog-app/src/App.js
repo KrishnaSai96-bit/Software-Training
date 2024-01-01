@@ -126,27 +126,38 @@ const App = () => {
     const res = gridRef.current.api.applyTransaction({remove: selectedData});
   }, []);
 
-  const addItems = useCallback((addIndex) => {
-    add_index =  gridRef.current.api.getSelectedRows();
-    const newItems = [
-      createNewRowData()
-    ];
-    const res = gridRef.current.api.applyTransaction({
-      add: newItems,
-      addIndex: addIndex
-    });
-  }, []);
+const addSingleItem = useCallback(() => {
+  const newItem = createNewRowData();
+  const res = gridRef.current.api.applyTransaction({
+    add: [newItem],
+  });
+}, []);
 
- 
+const addMultipleItems = useCallback((addIndex) => {
+  const newItems = [
+    createNewRowData(),
+    createNewRowData(),
+    // Add more rows as needed
+  ];
+  const res = gridRef.current.api.applyTransaction({
+    add: newItems,
+    addIndex: addIndex,
+  });
+}, []);
 
   const clearData = useCallback(() => {
-    const rowData = [];
-    gridRef.current.api.forEachNode(function (node) {
-      rowData.push(node.data);
-    });
-    const res = gridRef.current.api.applyTransaction({
-      remove: rowData,
-    });
+    const selectedData = gridRef.current.api.getSelectedRows();
+  
+    if (selectedData.length > 0) {
+      const res = gridRef.current.api.applyTransaction({
+        remove: selectedData,
+      });
+    } else {
+      const allData = gridRef.current.api.getModel().rowsToDisplay.map((node) => node.data);
+      const res = gridRef.current.api.applyTransaction({
+        remove: allData,
+      });
+    }
   }, []);
 
   return (
@@ -201,35 +212,25 @@ const App = () => {
             Get Recipes By Cooking Time
           </button>
 
+          <button type='button' className='btn btn-primary' onClick={() => addSingleItem(undefined)} style={{ marginRight: '15px' }}>Add Single Item</button>
+
+          <button type='button' className='btn btn-primary' onClick={() => addMultipleItems(undefined)} style={{ marginRight: '15px' }}>
+          Add Multiple Items </button>
+        
+          <br></br>
           <br></br>
 
-          <br></br>
+          <button type='button' className='btn btn-primary' onClick={onRemoveSelected} style={{ marginRight: '15px', backgroundColor: 'purple' }}>Remove Selected</button>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('InsertData')} style={{ marginRight: '15px', backgroundColor: 'magenta'}}>
-            Insert Data
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('SaveData')} style={{ marginRight: '15px', backgroundColor: 'green'}}>
+            Save Data
           </button>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UpdateData')} style={{ marginRight: '15px', backgroundColor: 'green'}}>
-            Update Data
-          </button>
-
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('DeleteData')} style={{ marginRight: '15px', backgroundColor: 'grey'}}>
-            Delete Data
-          </button>
-
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UploadData')} style={{ marginRight: '15px', backgroundColor: 'red'}}>
-            Upload Data
-          </button>
+          <button type='button' className='btn btn-primary' onClick={clearData} style={{ marginRight: '15px', backgroundColor: 'red' }}>Clear Data</button>
 
         </form>
 
         <br></br>
-
-        <button type='button' className='btn btn-primary' onClick={() => addItems(undefined)} style={{ marginRight: '15px' }}>Add Items</button>
-        
-        <button type='button' className='btn btn-primary' onClick={onRemoveSelected} style={{ marginRight: '15px' }}>Remove Selected</button>
-        
-        <button type='button' className='btn btn-primary' onClick={clearData}>Clear Data</button>
 
         <div className="ag-theme-quartz" style={{ height: 500}}>
           <AgGridReact 
