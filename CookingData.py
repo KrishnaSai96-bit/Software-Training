@@ -184,16 +184,16 @@ async def GetData(CookingTime: int, db:db_dependency):
 #     detail = matchstatement.DisplayErrorCode(Code)
 #     raise HTTPException(status_code = Code, detail = detail, headers = {"X-Error": "My Custom Error"})
   
-# @app.get("/CookingData/InsertFileData{FielName}", status_code=status.HTTP_200_OK)
-# async def InserFielData(FileName: str, db:db_dependency):
-#     with open(FileName, 'r') as f: 
-#        dict_reader = DictReader(f)
-#        entries = list(dict_reader)
-#     for entry in entries:
-#         statement = text("INSERT INTO cookingdata(ID, Title, Ingredients, CookingTime, Category, Steps) VALUES(:ID, :Title, :Ingredients, :CookingTime, :Category, :Steps)")
-#         db.execute(statement,entry)
-#         db.commit()
-#     return "datainsertedsuccesfully"
+@app.get("/CookingData/InsertFileData{FielName}", status_code=status.HTTP_200_OK)
+async def InserFielData(FileName: str, db:db_dependency):
+    with open(FileName, 'r') as f: 
+       dict_reader = DictReader(f)
+       entries = list(dict_reader)
+    for entry in entries:
+        statement = text("INSERT INTO cookingdata(ID, Title, Ingredients, CookingTime, Category, Steps) VALUES(:ID, :Title, :Ingredients, :CookingTime, :Category, :Steps)")
+        db.execute(statement,entry)
+        db.commit()
+    return "datainsertedsuccesfully"
 
 # @app.get("/CookingData/GetRecipeForGivenID{ID}", status_code=status.HTTP_200_OK)
 # async def GetData(ID: int, db:db_dependency):

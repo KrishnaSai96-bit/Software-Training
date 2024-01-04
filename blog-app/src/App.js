@@ -19,14 +19,14 @@ const App = () => {
   const [formData, setFormData] = useState({
     ID: '',
     Category: '',
-    CookingTime: ''
+    CookingTime: '',
+    FileName: ''
   });
   
   let updated_data = null;
   let selected_row_data = null;
   let add_index;
   const fetchCookingdata = async (buttonValue) => {
-
       let response;
       if (buttonValue === 'getById') {
         response = await api.get(`/CookingData/GetID${formData.ID}`);
@@ -47,14 +47,25 @@ const App = () => {
           console.log(selected_row_data);
           await api.put(`/CookingData/Update_CookingData/${selected_row_data.ID}`, selected_row_data);
         }
-          
         return;
+      }
+      else if (buttonValue === 'UploadData') {
+        await uploadData();
       }
       else{
         response = await api.get(`/CookingData/GetID${formData.ID}`);
       }
       setCookingdata(response.data);
     }
+    const uploadData = async () => {
+      try {
+        const response = await api.post('/CookingData/UploadData', { FileName: formData.FileName });
+        console.log('Upload successful', response);
+        fetchCookingdata('getAllRecipes');
+      } catch (error) {
+        console.error('Upload failed', error);
+      }
+    };
 
   useEffect(() => {
   }, []);
@@ -92,6 +103,10 @@ const App = () => {
 
       else if (buttonValue === 'SaveData') {
         fetchCookingdata('SaveData');
+      }
+
+      else if (buttonValue === 'UploadData') {
+        fetchCookingdata('UploadData');
       }
 
   }
@@ -194,6 +209,13 @@ const addMultipleItems = useCallback((addIndex) => {
             <input type='text' className='form-control' id='CookingTime' name='CookingTime' onChange={handleInputChange} value={formData.CookingTime} style={{ width: '100px' }}/>
           </div>
 
+          <div className='mb-3 mt-3'>
+            <label htmlFor='FileName' className='form-label'>
+            File Name
+            </label>
+            <input type='text' className='form-control' id='FileName' name='FileName' onChange={handleInputChange} value={formData.FileName} style={{ width: '100px' }}/>
+          </div>
+
           <br></br>
           
           <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')} style={{ marginRight: '15px' }}>
@@ -227,6 +249,10 @@ const addMultipleItems = useCallback((addIndex) => {
           </button>
 
           <button type='button' className='btn btn-primary' onClick={clearData} style={{ marginRight: '15px', backgroundColor: 'red' }}>Clear Data</button>
+
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UploadData')} style={{ marginRight: '15px' }}>
+            Upload Data
+          </button>
 
         </form>
 
