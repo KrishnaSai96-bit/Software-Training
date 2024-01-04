@@ -61,7 +61,7 @@ const App = () => {
       try {
         const response = await api.post('/CookingData/InsertFileData', { FileName: formData.FileName });
         console.log('Upload Successful', response);
-        fetchCookingdata('getAllRecipes');
+        //fetchCookingdata('getAllRecipes');
       } catch (error) {
         console.error('Upload failed', error);
       }
