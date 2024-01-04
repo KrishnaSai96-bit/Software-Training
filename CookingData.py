@@ -183,8 +183,8 @@ async def GetData(CookingTime: int, db:db_dependency):
 # async def GetData(Code: int, db:db_dependency):
 #     detail = matchstatement.DisplayErrorCode(Code)
 #     raise HTTPException(status_code = Code, detail = detail, headers = {"X-Error": "My Custom Error"})
-  
-@app.get("/CookingData/InsertFileData{FielName}", status_code=status.HTTP_200_OK)
+
+@app.post("/CookingData/InsertFileData{FielName}", status_code=status.HTTP_200_OK)
 async def InserFielData(FileName: str, db:db_dependency):
     with open(FileName, 'r') as f: 
        dict_reader = DictReader(f)

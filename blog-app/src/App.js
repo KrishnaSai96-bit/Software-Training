@@ -59,7 +59,9 @@ const App = () => {
     }
     const uploadData = async () => {
       try {
-        const response = await api.post('/CookingData/InsertFileData', { FileName: formData.FileName });
+        //const response = await api.post(`/CookingData/InsertFileData${formData.FileName}`);
+        ///CookingData/InsertFileData{FielName}?FileName=RecipeDataSet1.csv'
+        const response = await api.post(`/CookingData/InsertFileData/${formData.FileName}?FileName=RecipeDataSet1.csv`);
         console.log('Upload Successful', response);
         //fetchCookingdata('getAllRecipes');
       } catch (error) {
