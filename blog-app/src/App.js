@@ -28,18 +28,21 @@ const App = () => {
   let add_index;
   const fetchCookingdata = async (buttonValue) => {
       let response;
-      if (buttonValue === 'getById') {
+      if (buttonValue === 'GetData') {
+        // add code here to call the appropriate get method based on the form value
+      } 
+      else if (buttonValue === 'getById') {
         response = await api.get(`/CookingData/GetID${formData.ID}`);
-      }
-      else if (buttonValue === 'getAllRecipes') {
-        response = await api.get('/CookingData/GetData');
-      }
+      } 
       else if (buttonValue === 'getByCategory') {
         response = await api.get(`/CookingData/GetRecipe_UsingCategory${formData.Category}`);
-      }
+      } 
       else if (buttonValue === 'getByCookingTime') {
         response = await api.get(`/CookingData/GetRecipe_UsingCookingTime${formData.CookingTime}`);
       }
+      else if (buttonValue === 'getAllRecipes') {
+        response = await api.get('/CookingData/GetData');
+      } 
       else if (buttonValue === 'SaveData') {
         const selectedData = gridRef.current.api.getSelectedRows();
         for (var i = 0; i < selectedData.length; i++){
@@ -50,25 +53,15 @@ const App = () => {
         return;
       }
       else if (buttonValue === 'UploadData') {
-        await uploadData();
+        response = await api.post(`/CookingData/InsertFileData/${formData.FileName}`);
+        response = await api.get('/CookingData/GetData');
       }
       else{
         response = await api.get(`/CookingData/GetID${formData.ID}`);
       }
       setCookingdata(response.data);
     }
-    const uploadData = async () => {
-      try {
-        //const response = await api.post(`/CookingData/InsertFileData${formData.FileName}`);
-        ///CookingData/InsertFileData{FielName}?FileName=RecipeDataSet1.csv'
-        const response = await api.post(`/CookingData/InsertFileData/${formData.FileName}?FileName=RecipeDataSet1.csv`);
-        console.log('Upload Successful', response);
-        //fetchCookingdata('getAllRecipes');
-      } catch (error) {
-        console.error('Upload failed', error);
-      }
-    };
-
+//RecipeDataSet1.csv
   useEffect(() => {
   }, []);
 
@@ -190,6 +183,12 @@ const addMultipleItems = useCallback((addIndex) => {
       <div className='container'>
         <form>
 
+        <div className='container-fluid'>
+          <a className='navbar-brand'>
+            Filter By : 
+          </a>
+        </div>
+
           <div className='mb-3 mt-3'>
             <label htmlFor='ID' className='form-label'>
               ID
@@ -211,6 +210,12 @@ const addMultipleItems = useCallback((addIndex) => {
             <input type='text' className='form-control' id='CookingTime' name='CookingTime' onChange={handleInputChange} value={formData.CookingTime} style={{ width: '100px' }}/>
           </div>
 
+          <div className='container-fluid'>
+          <a className='navbar-brand'>
+            Upload : 
+          </a>
+          </div>
+
           <div className='mb-3 mt-3'>
             <label htmlFor='FileName' className='form-label'>
             File Name
@@ -219,42 +224,49 @@ const addMultipleItems = useCallback((addIndex) => {
           </div>
 
           <br></br>
-          
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')} style={{ marginRight: '15px' }}>
+
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('GetData')} style={{ marginRight: '15px' }}>
+            Get Data
+          </button>
+
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('SaveData')} style={{ marginRight: '15px', backgroundColor: 'green'}}>
+            Save Data
+          </button>
+        
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UploadData')} style={{ marginRight: '15px', backgroundColor: 'magenta' }}>
+            Upload Data
+          </button>
+
+          <br></br>
+          <br></br>
+
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getAllRecipes')} style={{ marginRight: '15px', backgroundColor: 'gray'}}>
             Get All Recipes
           </button>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getById')} style={{ marginRight: '15px' }}>
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getById')} style={{ marginRight: '15px', backgroundColor: 'gray' }}>
             Get Recipe By ID
           </button> 
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getByCategory')} style={{ marginRight: '15px' }}>
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getByCategory')} style={{ marginRight: '15px', backgroundColor: 'gray' }}>
             Get Recipes By Category
           </button>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getByCookingTime')} style={{ marginRight: '15px' }}>
+          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getByCookingTime')} style={{ marginRight: '15px', backgroundColor: 'gray' }}>
             Get Recipes By Cooking Time
           </button>
+
+          <br></br>
+          <br></br>
 
           <button type='button' className='btn btn-primary' onClick={() => addSingleItem(undefined)} style={{ marginRight: '15px' }}>Add Single Item</button>
 
           <button type='button' className='btn btn-primary' onClick={() => addMultipleItems(undefined)} style={{ marginRight: '15px' }}>
           Add Multiple Items </button>
         
-          <br></br>
-          <br></br>
-
           <button type='button' className='btn btn-primary' onClick={onRemoveSelected} style={{ marginRight: '15px', backgroundColor: 'purple' }}>Remove Selected</button>
 
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('SaveData')} style={{ marginRight: '15px', backgroundColor: 'green'}}>
-            Save Data
-          </button>
-
           <button type='button' className='btn btn-primary' onClick={clearData} style={{ marginRight: '15px', backgroundColor: 'red' }}>Clear Data</button>
-
-          <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UploadData')} style={{ marginRight: '15px' }}>
-            Upload Data
-          </button>
 
         </form>
 
