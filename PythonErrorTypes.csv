@@ -1,12 +1,11 @@
 ID,Exception,Description
-1,AssertionError,"Raised when the assert statement fails.
-Raised when the assert statement fails."
-2,AttributeError,Raised on the attribute assignment or reference fails.
-3,EOFError,Raised when the input() function hits the end-of-file condition.
-4,FloatingPointError,Raised when a floating point operation fails.
-5,GeneratorExit,Raised when a generator's close() method is called.
-6,ImportError,Raised when the imported module is not found.
-7,IndexError,Raised when the index of a sequence is out of range.
-8,KeyError,Raised when a key is not found in a dictionary.
-9,KeyboardInterrupt,Raised when the user hits the interrupt key (Ctrl+c or delete).
-10,MemoryError,Raised when an operation runs out of memory.
+PYTHON-1,AssertionError,Raised when the assert statement fails.
+PYTHON-2,AttributeError,Raised on the attribute assignment or reference fails.
+PYTHON-3,EOFError,Raised when the input() function hits the end-of-file condition.
+PYTHON-4,FloatingPointError,Raised when a floating point operation fails.
+PYTHON-5,GeneratorExit,Raised when a generator's close() method is called.
+PYTHON-6,ImportError,Raised when the imported module is not found.
+PYTHON-7,IndexError,Raised when the index of a sequence is out of range.
+PYTHON-8,KeyError,Raised when a key is not found in a dictionary.
+PYTHON-9,KeyboardInterrupt,Raised when the user hits the interrupt key (Ctrl+c or delete).
+PYTHON-10,MemoryError,Raised when an operation runs out of memory.

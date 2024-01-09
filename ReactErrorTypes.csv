@@ -1,11 +1,11 @@
 ID,ErrorScenario,Description
-1,"Mismatched Braces, Parentheses, or Brackets","In this scenario, a syntax error occurs because there is a missing closing parenthesis in the console.log statement."
-2,Missing Semicolons,JavaScript uses semicolons to separate statements. Omitting them can lead to syntax errors.
-3,Typos and Misspelled Keywords,"Here, a syntax error occurs because the keyword function is misspelled as funtion."
-4,Undefined Variables,"Here, a reference error occurs because myVariable is used before it's declared. Declaring the variable before using it resolves the issue."
-5,Scoping Issues,"Here, a reference error occurs because message is defined within the scope of the if block and is not accessible outside of it. Moving the variable declaration to a broader scope fixes the issue."
-6,Accessing Properties of Undefined Objects,"If you try to access a property of an object that is undefined, a reference error will occur. Using conditional checks or ensuring the object is properly initialized can prevent such errors."
-7,Incorrect Data Type for an Operation,"Here, a type error occurs because toUpperCase() is a string method, and you can't directly apply it to a number. Converting the number to a string before applying the method resolves the issue."
-8,Mismatched Data Types in Arithmetic Operations,Attempting to perform a multiplication operation on a string and a number results in a type error. Using the appropriate string method fixes the issue.
-9,Incorrect Usage of Functions,"Using a function incorrectly, such as trying to call toUpperCase() on the String constructor, results in a type error. The correct usage involves creating a string instance first."
-10,Unexpected Tokens,This error might occur due to missing or extra characters that make the code structure unexpected.
+REACT-1,"Mismatched Braces, Parentheses, or Brackets","In this scenario, a syntax error occurs because there is a missing closing parenthesis in the console.log statement."
+REACT-2,Missing Semicolons,JavaScript uses semicolons to separate statements. Omitting them can lead to syntax errors.
+REACT-3,Typos and Misspelled Keywords,"Here, a syntax error occurs because the keyword function is misspelled as funtion."
+REACT-4,Undefined Variables,"Here, a reference error occurs because myVariable is used before it's declared. Declaring the variable before using it resolves the issue."
+REACT-5,Scoping Issues,"Here, a reference error occurs because message is defined within the scope of the if block and is not accessible outside of it. Moving the variable declaration to a broader scope fixes the issue."
+REACT-6,Accessing Properties of Undefined Objects,"If you try to access a property of an object that is undefined, a reference error will occur. Using conditional checks or ensuring the object is properly initialized can prevent such errors."
+REACT-7,Incorrect Data Type for an Operation,"Here, a type error occurs because toUpperCase() is a string method, and you can't directly apply it to a number. Converting the number to a string before applying the method resolves the issue."
+REACT-8,Mismatched Data Types in Arithmetic Operations,Attempting to perform a multiplication operation on a string and a number results in a type error. Using the appropriate string method fixes the issue.
+REACT-9,Incorrect Usage of Functions,"Using a function incorrectly, such as trying to call toUpperCase() on the String constructor, results in a type error. The correct usage involves creating a string instance first."
+REACT-10,Unexpected Tokens,This error might occur due to missing or extra characters that make the code structure unexpected.
