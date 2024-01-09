@@ -1,0 +1,11 @@
+ID,StatusCode,Title,Description
+1,100,Continue,"An interim response. Indicates to the client that the initial part of the request has been received and has not yet been rejected by the server. The client SHOULD continue by sending the remainder of the request or, if the request has already been completed, ignore this response. The server MUST send a final response after the request has been completed."
+2,200,OK,Indicates that the request has succeeded
+3,201,Created,Indicates that the request has succeeded and a new resource has been created as a result.
+4,400,Bad Request,The request could not be understood by the server due to incorrect syntax. The client SHOULD NOT repeat the request without modifications.
+5,402,Payment Required,Reserved for future use. It is aimed for using in the digital payment systems.
+6,404,Not Found,The server can not find the requested resource.
+7,422,Unprocessable Entity,"The server understands the content type and syntax of the request entity, but still server is unable to process the request for some reason."
+8,500,Internal Server Error,The server encountered an unexpected condition that prevented it from fulfilling the request.
+9,503,Service Unavailable,The server is not ready to handle the request.
+10,511,Network Authentication Required,Indicates that the client needs to authenticate to gain network access.
