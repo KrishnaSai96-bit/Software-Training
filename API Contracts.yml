@@ -1,0 +1,111 @@
+API Contract for Message_ID:
+openapi: 3.0.0
+info:
+  title: KnowledgeHub API
+  version: 1.0.0
+paths:
+  /KnowledgeHub/Message_ID:
+    get:
+      summary: Retrieve data by ID
+      parameters:
+        - in: path
+          name: Message_ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    properties:
+                      Message_ID:
+                        type: integer
+                        description: The ID of the message
+                      Technology_Type:  
+                        type: string
+                        description: The technology type of the message
+                      Exception_Type:
+                        type: stirng
+                        description: The exception type of the message
+                      Exception_Title:
+                        type: string
+                        description: The exception title of the message
+                      Descpription:
+                        type: string
+                        description: The description of the message
+-----------------------------------------------------------------------------------------------------------------------------
+API Contract for Exception Type:
+openapi: 3.0.0
+info:
+  title: KnowledgeHub API
+  version: 1.0.0
+paths:
+  /KnowledgeHub/Expection_Type:
+    get:
+      summary: Retrieve exception type details
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  properties:
+                      Message_ID:
+                        type: integer
+                        description: The ID of the message
+                      Technology_Type:  
+                        type: string
+                        description: The technology type of the message
+                      Exception_Type:
+                        type: stirng
+                        description: The exception type of the message
+                      Exception_Title:
+                        type: string
+                        description: The exception title of the message
+                      Descpription:
+                        type: string
+                        description: The description of the message
+---------------------------------------------------------------------------------------------------------------------------------
+POST Method:
+openapi: 3.0.0
+info:
+  title: KnowledgeHub API
+  version: 1.0.0
+paths:
+  /KnowledgeHub/Expectione_Type:
+    get:
+      summary: Retrieve exception type details
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exception_type:
+                    type: string
+    post:
+      summary: Create a new exception type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                exception_type:
+                  type: string
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
