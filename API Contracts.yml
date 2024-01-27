@@ -110,8 +110,21 @@ paths:
             schema:
               type: object
               properties:
-                exception_type:
+                Message_ID:
+                  type: integer
+                  description: The ID of the message
+                Technology_Type:
                   type: string
+                  description: The technology type of the message
+                Description:
+                  type: string
+                  description: The description of the message
+                Exception_Title:
+                  type: string
+                  description: The exception title of the message
+                Description:
+                  type: string
+                  description: The description of the message
             example: 
               exception_type: "NewExceptionType"
       responses:
@@ -119,6 +132,7 @@ paths:
           description: Created
         '400':
           description: Bad Request
+
 -------------------------------------------------------------------------------------------------------------------------------------
 API Contract for Technology Type:
 GET Method:
@@ -185,10 +199,25 @@ paths:
             schema:
               type: object
               properties:
-                technology_type:
+                Message_ID:
+                  type: integer
+                  description: The ID of the message
+                Technology_Type:
                   type: string
+                  description: The technology type of the message
+                Description:
+                  type: string
+                  description: The description of the message
+                Exception_Title:
+                  type: string
+                  description: The exception title of the message
+                Description:
+                  type: string
+                  description: The description of the message
       responses:
         '201':
           description: Created
         '400':
           description: Bad Request         
+
+          

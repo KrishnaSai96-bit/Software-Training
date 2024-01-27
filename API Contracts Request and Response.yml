@@ -1,0 +1,14 @@
+http://127.0.0.1:8000/docs#/default/get_KnowledgeHub/Messages__Message_ID__get
+Request Body
+{
+  "message_id": 1
+}
+Response Body
+{
+  "Message_ID": 1
+  "Technology_Type": "JS"
+  "Exception_Type": "Error"
+  "Exception_Title": "Permission denied to access property "x""
+  "Descpription": "The JavaScript exception "Permission denied to access property" occurs when there was an attempt to access an object for which you have no permission."
+}
+
