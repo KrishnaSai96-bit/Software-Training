@@ -6,7 +6,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from fastapi import FastAPI, HTTPException, Depends, status, Response
 from pydantic import BaseModel #data validation
 from typing import Annotated
-#import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
@@ -29,8 +28,6 @@ engine = create_engine(URL_DATABASE)
 SessionLocal = sessionmaker(autocommit = False, autoflush = False, bind = engine)
 Base = declarative_base()
 db = SessionLocal()
-
-
 
 #Data Models
 class CookingData(Base):
