@@ -99,7 +99,7 @@ async def GetData(db:db_dependency):
         exceptions_list.append(exceptions_dict)
     return exceptions_list
 
-@app.get("/KnowledgeHub/GetData_Using_ID{ID}", status_code=status.HTTP_200_OK)
+@app.get("/KnowledgeHub/GetData_Using_ID{Message_ID}", status_code=status.HTTP_200_OK)
 async def GetData(Message_ID: str, db:db_dependency):
     statement = text("SELECT * FROM knowledgehub.knowledge_hub where Message_ID = :Message_ID")
     result = db.execute(statement, {'Message_ID': Message_ID})
