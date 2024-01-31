@@ -81,14 +81,14 @@ async def InserFielData(FileName: str, db:db_dependency):
         db.commit()
     return "Data Inserted Succesfully"
 
-@app.post("/KnowledgeHub/CreateData", status_code=status.HTTP_200_OK)
+@app.post("/KnowledgeHub/CreateData/", status_code=status.HTTP_200_OK)
 async def CreateData (EXBO: KnowledgeHub, db:db_dependency):
     EXBO = EXBO.model_dump()
     statement = text("INSERT INTO knowledge_hub(Message_ID, Technology_Type, Exception_Type, Exception_Title, Description) VALUES(:Message_ID, :Technology_Type, :Exception_Type, :Exception_Title, :Description)")
     db.execute(statement, EXBO)
     db.commit()
     
-@app.get("/KnowledgeHub/GetData", status_code=status.HTTP_200_OK)
+@app.get("/KnowledgeHub/GetData/", status_code=status.HTTP_200_OK)
 async def GetData(db:db_dependency):
     statement = text("SELECT * FROM knowledgehub.knowledge_hub")
     result = db.execute(statement)
@@ -99,7 +99,7 @@ async def GetData(db:db_dependency):
         exceptions_list.append(exceptions_dict)
     return exceptions_list
 
-@app.get("/KnowledgeHub/GetData_Using_ID{Message_ID}", status_code=status.HTTP_200_OK)
+@app.get("/KnowledgeHub/GetData_Using_ID/{Message_ID}", status_code=status.HTTP_200_OK)
 async def GetData(Message_ID: str, db:db_dependency):
     statement = text("SELECT * FROM knowledgehub.knowledge_hub where Message_ID = :Message_ID")
     result = db.execute(statement, {'Message_ID': Message_ID})
@@ -110,7 +110,7 @@ async def GetData(Message_ID: str, db:db_dependency):
         exceptions_list.append(exceptions_dict)
     return exceptions_list
 
-@app.get("/KnowledgeHub/GetData_Using_Technology_Type{TechnologyType}", status_code=status.HTTP_200_OK)
+@app.get("/KnowledgeHub/GetData_Using_Technology_Type/{TechnologyType}", status_code=status.HTTP_200_OK)
 async def GetData(Technology_Type: str, db:db_dependency):
     statement = text("SELECT * FROM knowledgehub.knowledge_hub where Technology_Type = :Technology_Type")
     result = db.execute(statement, {'Technology_Type': Technology_Type})

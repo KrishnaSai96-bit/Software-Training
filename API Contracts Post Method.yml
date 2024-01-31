@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: KnowledgeHub API
+  version: 1.0.0
+paths:
+  /KnowledgeHub/CreateData:
+    post:
+      summary: Create a new exception type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Message_ID:
+                  type: integer
+                  description: The ID of the message
+                Technology_Type:
+                  type: string
+                  description: The technology type of the message
+                Exception_Type:
+                    type: string
+                    description: The exception type of the message
+                Exception_Title:
+                  type: string
+                  description: The exception title of the message
+                Description:
+                  type: string
+                  description: The description of the message
+               
+              required:
+                - Message_ID
+                - Technology_Type
+                - Exception_Type
+                - Exception_Title
+                - Description
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request

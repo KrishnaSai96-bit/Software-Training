@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: KnowledgeHub API
+  version: 1.0.0
+paths:
+  KnowledgeHub/GetData_Using_ID/{Message_ID}:
+    get:
+      summary: Retrieve data by ID
+      parameters:
+        - in: path
+          name: Message_ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    properties:
+                      Message_ID:
+                        type: integer
+                        description: The ID of the message
+                      Technology_Type:  
+                        type: string
+                        description: The technology type of the message
+                      Exception_Type:
+                        type: string
+                        description: The exception type of the message
+                      Exception_Title:
+                        type: string
+                        description: The exception title of the message
+                      Description:
+                        type: string
+                        description: The description of the message

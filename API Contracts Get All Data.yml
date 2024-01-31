@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  title: KnowledgeHub API
+  version: 1.0.0
+paths:
+  /KnowledgeHub/GetData_Using_Technology_Type/{Technology_Type}:
+    get:
+      summary: Retrieve data using technology type details
+      parameters:
+        - in: path
+          name: Technology_Type
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Message_ID:
+                          type: integer
+                          description: The ID of the message
+                        Technology_Type:
+                          type: string
+                          description: The technology type of the message
+                        Description:
+                          type: string
+                          description: The description of the message
+                        Exception_Title:
+                          type: string
+                          description: The exception title of the message
+              required:
+                - Message_ID
+                - Technology_Type
+                - Description
+                - Exception_Title
