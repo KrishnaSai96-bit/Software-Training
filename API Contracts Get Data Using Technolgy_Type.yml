@@ -40,3 +40,85 @@ paths:
                 - Exception_Type
                 - Exception_Title
                 - Description
+
+API Example:
+URL:
+http://127.0.0.1:8000/docs#/default/GetData_KnowledgeHub_GetData_Using_Technology_Type__TechnologyType__get
+
+Request Body
+{
+  http://127.0.0.1:8000/KnowledgeHub/GetData_Using_Technology_Type/{TechnologyType}?Technology_Type=JS
+}
+Response Body
+{[
+  {
+    "Message_ID": 1,
+    "Technology_Type": "JS",
+    "Exception_Type": "Error",
+    "Exception_Title": "Permission denied to access property \"x\"",
+    "Description": "The JavaScript exception \"Permission denied to access property\" occurs when there was an attempt to access an object for which you have no permission."
+  },
+  {
+    "Message_ID": 2,
+    "Technology_Type": "JS",
+    "Exception_Type": "InternalError",
+    "Exception_Title": "Too much recursion",
+    "Description": "The JavaScript exception \"too much recursion\" or \"Maximum call stack size exceeded\" occurs when there are too many function calls, or a function is missing a base case."
+  },
+  {
+    "Message_ID": 3,
+    "Technology_Type": "JS",
+    "Exception_Type": "RangeError",
+    "Exception_Title": "BigInt division by zero",
+    "Description": "The JavaScript exception \"BigInt division by zero\" occurs when a BigInt is divided by 0n."
+  },
+  {
+    "Message_ID": 4,
+    "Technology_Type": "JS",
+    "Exception_Type": "ReferenceError",
+    "Exception_Title": "\"x\" is not defined",
+    "Description": "The JavaScript exception \"variable is not defined\" occurs when there is a non-existent variable referenced somewhere."
+  },
+  {
+    "Message_ID": 5,
+    "Technology_Type": "JS",
+    "Exception_Type": "SyntaxError",
+    "Exception_Title": "\"0\"-prefixed octal literals and octal escape seq. are deprecated",
+    "Description": "The JavaScript strict mode-only exception \"0-prefixed octal literals and octal escape sequences are deprecated; for octal literals use the \"0o\" prefix instead\" occurs when deprecated octal literals and octal escape sequences are used."
+  },
+  {
+    "Message_ID": 6,
+    "Technology_Type": "JS",
+    "Exception_Type": "TypeError",
+    "Exception_Title": "\"x\" has no properties",
+    "Description": "The JavaScript exception \"null (or undefined) has no properties\" occurs when you attempt to access properties of null and undefined. They don't have any."
+  },
+  {
+    "Message_ID": 7,
+    "Technology_Type": "JS",
+    "Exception_Type": "URIError",
+    "Exception_Title": "Malformed URI sequence",
+    "Description": "The JavaScript exception \"malformed URI sequence\" occurs when URI encoding or decoding wasn't successful."
+  },
+  {
+    "Message_ID": 8,
+    "Technology_Type": "JS",
+    "Exception_Type": "Warning",
+    "Exception_Title": "Unreachable code after return statement",
+    "Description": "The JavaScript warning \"unreachable code after return statement\" occurs when using an expression after a return statement, or when using a semicolon-less return statement but including an expression directly after."
+  },
+  {
+    "Message_ID": 9,
+    "Technology_Type": "JS",
+    "Exception_Type": "RangeError",
+    "Exception_Title": "Invalid date",
+    "Description": "The JavaScript exception \"invalid date\" occurs when a string leading to an invalid date has been provided to Date or Date.parse()."
+  },
+  {
+    "Message_ID": 10,
+    "Technology_Type": "JS",
+    "Exception_Type": "SyntaxError",
+    "Exception_Title": "Illegal character",
+    "Description": "The JavaScript exception \"illegal character\" occurs when there is an invalid or unexpected token that doesn't belong at this position in the code."
+  }
+]}

@@ -42,3 +42,301 @@ paths:
                 - Technology_Type
                 - Description
                 - Exception_Title
+API Example:
+URL:
+http://127.0.0.1:8000/docs#/default/GetData_KnowledgeHub_GetData__get
+
+Request Body
+{
+  http://127.0.0.1:8000/KnowledgeHub/GetData/
+}
+Response Body
+{[
+  {
+    "Message_ID": 1,
+    "Technology_Type": "JS",
+    "Exception_Type": "Error",
+    "Exception_Title": "Permission denied to access property \"x\"",
+    "Description": "The JavaScript exception \"Permission denied to access property\" occurs when there was an attempt to access an object for which you have no permission."
+  },
+  {
+    "Message_ID": 2,
+    "Technology_Type": "JS",
+    "Exception_Type": "InternalError",
+    "Exception_Title": "Too much recursion",
+    "Description": "The JavaScript exception \"too much recursion\" or \"Maximum call stack size exceeded\" occurs when there are too many function calls, or a function is missing a base case."
+  },
+  {
+    "Message_ID": 3,
+    "Technology_Type": "JS",
+    "Exception_Type": "RangeError",
+    "Exception_Title": "BigInt division by zero",
+    "Description": "The JavaScript exception \"BigInt division by zero\" occurs when a BigInt is divided by 0n."
+  },
+  {
+    "Message_ID": 4,
+    "Technology_Type": "JS",
+    "Exception_Type": "ReferenceError",
+    "Exception_Title": "\"x\" is not defined",
+    "Description": "The JavaScript exception \"variable is not defined\" occurs when there is a non-existent variable referenced somewhere."
+  },
+  {
+    "Message_ID": 5,
+    "Technology_Type": "JS",
+    "Exception_Type": "SyntaxError",
+    "Exception_Title": "\"0\"-prefixed octal literals and octal escape seq. are deprecated",
+    "Description": "The JavaScript strict mode-only exception \"0-prefixed octal literals and octal escape sequences are deprecated; for octal literals use the \"0o\" prefix instead\" occurs when deprecated octal literals and octal escape sequences are used."
+  },
+  {
+    "Message_ID": 6,
+    "Technology_Type": "JS",
+    "Exception_Type": "TypeError",
+    "Exception_Title": "\"x\" has no properties",
+    "Description": "The JavaScript exception \"null (or undefined) has no properties\" occurs when you attempt to access properties of null and undefined. They don't have any."
+  },
+  {
+    "Message_ID": 7,
+    "Technology_Type": "JS",
+    "Exception_Type": "URIError",
+    "Exception_Title": "Malformed URI sequence",
+    "Description": "The JavaScript exception \"malformed URI sequence\" occurs when URI encoding or decoding wasn't successful."
+  },
+  {
+    "Message_ID": 8,
+    "Technology_Type": "JS",
+    "Exception_Type": "Warning",
+    "Exception_Title": "Unreachable code after return statement",
+    "Description": "The JavaScript warning \"unreachable code after return statement\" occurs when using an expression after a return statement, or when using a semicolon-less return statement but including an expression directly after."
+  },
+  {
+    "Message_ID": 9,
+    "Technology_Type": "JS",
+    "Exception_Type": "RangeError",
+    "Exception_Title": "Invalid date",
+    "Description": "The JavaScript exception \"invalid date\" occurs when a string leading to an invalid date has been provided to Date or Date.parse()."
+  },
+  {
+    "Message_ID": 10,
+    "Technology_Type": "JS",
+    "Exception_Type": "SyntaxError",
+    "Exception_Title": "Illegal character",
+    "Description": "The JavaScript exception \"illegal character\" occurs when there is an invalid or unexpected token that doesn't belong at this position in the code."
+  },
+  {
+    "Message_ID": 11,
+    "Technology_Type": "Python",
+    "Exception_Type": "AssertionError",
+    "Exception_Title": "Raised when the assert statement fails.",
+    "Description": "Raised when the assert statement fails."
+  },
+  {
+    "Message_ID": 12,
+    "Technology_Type": "Python",
+    "Exception_Type": "AttributeError",
+    "Exception_Title": "Raised on the attribute assignment or reference fails.",
+    "Description": "Raised on the attribute assignment or reference fails."
+  },
+  {
+    "Message_ID": 13,
+    "Technology_Type": "Python",
+    "Exception_Type": "EOFError",
+    "Exception_Title": "Raised when the input() function hits the end-of-file condition.",
+    "Description": "Raised when the input() function hits the end-of-file condition."
+  },
+  {
+    "Message_ID": 14,
+    "Technology_Type": "Python",
+    "Exception_Type": "FloatingPointError",
+    "Exception_Title": "Raised when a floating point operation fails.",
+    "Description": "Raised when a floating point operation fails."
+  },
+  {
+    "Message_ID": 15,
+    "Technology_Type": "Python",
+    "Exception_Type": "GeneratorExit",
+    "Exception_Title": "Raised when a generator's close() method is called.",
+    "Description": "Raised when a generator's close() method is called."
+  },
+  {
+    "Message_ID": 16,
+    "Technology_Type": "Python",
+    "Exception_Type": "ImportError",
+    "Exception_Title": "Raised when the imported module is not found.",
+    "Description": "Raised when the imported module is not found."
+  },
+  {
+    "Message_ID": 17,
+    "Technology_Type": "Python",
+    "Exception_Type": "IndexError",
+    "Exception_Title": "Raised when the index of a sequence is out of range.",
+    "Description": "Raised when the index of a sequence is out of range."
+  },
+  {
+    "Message_ID": 18,
+    "Technology_Type": "Python",
+    "Exception_Type": "KeyError",
+    "Exception_Title": "Raised when a key is not found in a dictionary.",
+    "Description": "Raised when a key is not found in a dictionary."
+  },
+  {
+    "Message_ID": 19,
+    "Technology_Type": "Python",
+    "Exception_Type": "KeyboardInterrupt",
+    "Exception_Title": "Raised when the user hits the interrupt key (Ctrl+c or delete).",
+    "Description": "Raised when the user hits the interrupt key (Ctrl+c or delete)."
+  },
+  {
+    "Message_ID": 20,
+    "Technology_Type": "Python",
+    "Exception_Type": "MemoryError",
+    "Exception_Title": "Raised when an operation runs out of memory.",
+    "Description": "Raised when an operation runs out of memory."
+  },
+  {
+    "Message_ID": 21,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Mismatched Braces, Parentheses, or Brackets",
+    "Exception_Title": "Mismatched Braces, Parentheses, or Brackets",
+    "Description": "In this scenario, a syntax error occurs because there is a missing closing parenthesis in the console.log statement."
+  },
+  {
+    "Message_ID": 22,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Missing Semicolons",
+    "Exception_Title": "Missing Semicolons",
+    "Description": "JavaScript uses semicolons to separate statements. Omitting them can lead to syntax errors."
+  },
+  {
+    "Message_ID": 23,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Typos and Misspelled Keywords",
+    "Exception_Title": "Typos and Misspelled Keywords",
+    "Description": "Here, a syntax error occurs because the keyword function is misspelled as funtion."
+  },
+  {
+    "Message_ID": 24,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Undefined Variables",
+    "Exception_Title": "Undefined Variables",
+    "Description": "Here, a reference error occurs because myVariable is used before it's declared. Declaring the variable before using it resolves the issue."
+  },
+  {
+    "Message_ID": 25,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Scoping Issues",
+    "Exception_Title": "Scoping Issues",
+    "Description": "Here, a reference error occurs because message is defined within the scope of the if block and is not accessible outside of it. Moving the variable declaration to a broader scope fixes the issue."
+  },
+  {
+    "Message_ID": 26,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Accessing Properties of Undefined Objects",
+    "Exception_Title": "Accessing Properties of Undefined Objects",
+    "Description": "If you try to access a property of an object that is undefined, a reference error will occur. Using conditional checks or ensuring the object is properly initialized can prevent such errors."
+  },
+  {
+    "Message_ID": 27,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Incorrect Data Type for an Operation",
+    "Exception_Title": "Incorrect Data Type for an Operation",
+    "Description": "Here, a type error occurs because toUpperCase() is a string method, and you can't directly apply it to a number. Converting the number to a string before applying the method resolves the issue."
+  },
+  {
+    "Message_ID": 28,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Mismatched Data Types in Arithmetic Operations",
+    "Exception_Title": "Mismatched Data Types in Arithmetic Operations",
+    "Description": "Attempting to perform a multiplication operation on a string and a number results in a type error. Using the appropriate string method fixes the issue."
+  },
+  {
+    "Message_ID": 29,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Incorrect Usage of Functions",
+    "Exception_Title": "Incorrect Usage of Functions",
+    "Description": "Using a function incorrectly, such as trying to call toUpperCase() on the String constructor, results in a type error. The correct usage involves creating a string instance first."
+  },
+  {
+    "Message_ID": 30,
+    "Technology_Type": "REACT",
+    "Exception_Type": "Unexpected Tokens",
+    "Exception_Title": "Unexpected Tokens",
+    "Description": "This error might occur due to missing or extra characters that make the code structure unexpected."
+  },
+  {
+    "Message_ID": 31,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "100",
+    "Exception_Title": "Continue",
+    "Description": "An interim response. Indicates to the client that the initial part of the request has been received and has not yet been rejected by the server. The client SHOULD continue by sending the remainder of the request or, if the request has already been completed, ignore this response. The server MUST send a final response after the request has been completed."
+  },
+  {
+    "Message_ID": 32,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "200",
+    "Exception_Title": "OK",
+    "Description": "Indicates that the request has succeeded"
+  },
+  {
+    "Message_ID": 33,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "201",
+    "Exception_Title": "Created",
+    "Description": "Indicates that the request has succeeded and a new resource has been created as a result."
+  },
+  {
+    "Message_ID": 34,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "400",
+    "Exception_Title": "Bad Request",
+    "Description": "The request could not be understood by the server due to incorrect syntax. The client SHOULD NOT repeat the request without modifications."
+  },
+  {
+    "Message_ID": 35,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "402",
+    "Exception_Title": "Payment Required",
+    "Description": "Reserved for future use. It is aimed for using in the digital payment systems."
+  },
+  {
+    "Message_ID": 36,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "404",
+    "Exception_Title": "Not Found",
+    "Description": "The server can not find the requested resource."
+  },
+  {
+    "Message_ID": 37,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "422",
+    "Exception_Title": "Unprocessable Entity",
+    "Description": "The server understands the content type and syntax of the request entity, but still server is unable to process the request for some reason."
+  },
+  {
+    "Message_ID": 38,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "500",
+    "Exception_Title": "Internal Server Error",
+    "Description": "The server encountered an unexpected condition that prevented it from fulfilling the request."
+  },
+  {
+    "Message_ID": 39,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "503",
+    "Exception_Title": "Service Unavailable",
+    "Description": "The server is not ready to handle the request."
+  },
+  {
+    "Message_ID": 40,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "511",
+    "Exception_Title": "Network Authentication Required",
+    "Description": "Indicates that the client needs to authenticate to gain network access."
+  },
+  {
+    "Message_ID": 41,
+    "Technology_Type": "HTTP",
+    "Exception_Type": "202",
+    "Exception_Title": "Accepted",
+    "Description": "Indicates that the request has been received but not completed yet. It is typically used in log running requests and batch processing."
+  }
+]}
