@@ -1,0 +1,41 @@
+Message_ID,Technology_Type,Exception_Type,Exception_Title,Description
+1,JS,Error,"Permission denied to access property ""x""","The JavaScript exception ""Permission denied to access property"" occurs when there was an attempt to access an object for which you have no permission."
+2,JS,InternalError,Too much recursion,"The JavaScript exception ""too much recursion"" or ""Maximum call stack size exceeded"" occurs when there are too many function calls, or a function is missing a base case."
+3,JS,RangeError,BigInt division by zero,"The JavaScript exception ""BigInt division by zero"" occurs when a BigInt is divided by 0n."
+4,JS,ReferenceError,"""x"" is not defined","The JavaScript exception ""variable is not defined"" occurs when there is a non-existent variable referenced somewhere."
+5,JS,SyntaxError,"""0""-prefixed octal literals and octal escape seq. are deprecated","The JavaScript strict mode-only exception ""0-prefixed octal literals and octal escape sequences are deprecated; for octal literals use the ""0o"" prefix instead"" occurs when deprecated octal literals and octal escape sequences are used."
+6,JS,TypeError,"""x"" has no properties","The JavaScript exception ""null (or undefined) has no properties"" occurs when you attempt to access properties of null and undefined. They don't have any."
+7,JS,URIError,Malformed URI sequence,"The JavaScript exception ""malformed URI sequence"" occurs when URI encoding or decoding wasn't successful."
+8,JS,Warning,Unreachable code after return statement,"The JavaScript warning ""unreachable code after return statement"" occurs when using an expression after a return statement, or when using a semicolon-less return statement but including an expression directly after."
+9,JS,RangeError,Invalid date,"The JavaScript exception ""invalid date"" occurs when a string leading to an invalid date has been provided to Date or Date.parse()."
+10,JS,SyntaxError,Illegal character,"The JavaScript exception ""illegal character"" occurs when there is an invalid or unexpected token that doesn't belong at this position in the code."
+11,Python,AssertionError,Raised when the assert statement fails.,Raised when the assert statement fails.
+12,Python,AttributeError,Raised on the attribute assignment or reference fails.,Raised on the attribute assignment or reference fails.
+13,Python,EOFError,Raised when the input() function hits the end-of-file condition.,Raised when the input() function hits the end-of-file condition.
+14,Python,FloatingPointError,Raised when a floating point operation fails.,Raised when a floating point operation fails.
+15,Python,GeneratorExit,Raised when a generator's close() method is called.,Raised when a generator's close() method is called.
+16,Python,ImportError,Raised when the imported module is not found.,Raised when the imported module is not found.
+17,Python,IndexError,Raised when the index of a sequence is out of range.,Raised when the index of a sequence is out of range.
+18,Python,KeyError,Raised when a key is not found in a dictionary.,Raised when a key is not found in a dictionary.
+19,Python,KeyboardInterrupt,Raised when the user hits the interrupt key (Ctrl+c or delete).,Raised when the user hits the interrupt key (Ctrl+c or delete).
+20,Python,MemoryError,Raised when an operation runs out of memory.,Raised when an operation runs out of memory.
+21,REACT,"Mismatched Braces, Parentheses, or Brackets","Mismatched Braces, Parentheses, or Brackets","In this scenario, a syntax error occurs because there is a missing closing parenthesis in the console.log statement."
+22,REACT,Missing Semicolons,Missing Semicolons,JavaScript uses semicolons to separate statements. Omitting them can lead to syntax errors.
+23,REACT,Typos and Misspelled Keywords,Typos and Misspelled Keywords,"Here, a syntax error occurs because the keyword function is misspelled as funtion."
+24,REACT,Undefined Variables,Undefined Variables,"Here, a reference error occurs because myVariable is used before it's declared. Declaring the variable before using it resolves the issue."
+25,REACT,Scoping Issues,Scoping Issues,"Here, a reference error occurs because message is defined within the scope of the if block and is not accessible outside of it. Moving the variable declaration to a broader scope fixes the issue."
+26,REACT,Accessing Properties of Undefined Objects,Accessing Properties of Undefined Objects,"If you try to access a property of an object that is undefined, a reference error will occur. Using conditional checks or ensuring the object is properly initialized can prevent such errors."
+27,REACT,Incorrect Data Type for an Operation,Incorrect Data Type for an Operation,"Here, a type error occurs because toUpperCase() is a string method, and you can't directly apply it to a number. Converting the number to a string before applying the method resolves the issue."
+28,REACT,Mismatched Data Types in Arithmetic Operations,Mismatched Data Types in Arithmetic Operations,Attempting to perform a multiplication operation on a string and a number results in a type error. Using the appropriate string method fixes the issue.
+29,REACT,Incorrect Usage of Functions,Incorrect Usage of Functions,"Using a function incorrectly, such as trying to call toUpperCase() on the String constructor, results in a type error. The correct usage involves creating a string instance first."
+30,REACT,Unexpected Tokens,Unexpected Tokens,This error might occur due to missing or extra characters that make the code structure unexpected.
+31,HTTP,100,Continue,"An interim response. Indicates to the client that the initial part of the request has been received and has not yet been rejected by the server. The client SHOULD continue by sending the remainder of the request or, if the request has already been completed, ignore this response. The server MUST send a final response after the request has been completed."
+32,HTTP,200,OK,Indicates that the request has succeeded
+33,HTTP,201,Created,Indicates that the request has succeeded and a new resource has been created as a result.
+34,HTTP,400,Bad Request,The request could not be understood by the server due to incorrect syntax. The client SHOULD NOT repeat the request without modifications.
+35,HTTP,402,Payment Required,Reserved for future use. It is aimed for using in the digital payment systems.
+36,HTTP,404,Not Found,The server can not find the requested resource.
+37,HTTP,422,Unprocessable Entity,"The server understands the content type and syntax of the request entity, but still server is unable to process the request for some reason."
+38,HTTP,500,Internal Server Error,The server encountered an unexpected condition that prevented it from fulfilling the request.
+39,HTTP,503,Service Unavailable,The server is not ready to handle the request.
+40,HTTP,511,Network Authentication Required,Indicates that the client needs to authenticate to gain network access.

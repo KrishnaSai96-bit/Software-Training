@@ -34,7 +34,14 @@ const App = () => {
     } 
     else if (buttonValue === 'getAllData') {
       response = await api.get('/KnowledgeHub/GetData/');
-    } 
+    }
+    else if (buttonValue === 'UploadData') {
+      response = await api.post(`/KnowledgeHub/InsertFileData/${formData.FileName}`);
+      response = await api.get('/KnowledgeHub/GetData/');
+    }
+    else{
+      response = await api.get(`/KnowledgeHub/GetData_Using_ID/${formData.Message_ID}`);
+    }
     setExceptionsdata(response.data);
   }
   useEffect(() => {
@@ -58,7 +65,9 @@ const App = () => {
         else if (buttonValue === 'getByTechnologyType') {
           fetchExceptionsdata('getByTechnologyType');
         }
-  
+        else if (buttonValue === 'UploadData') {
+          fetchExceptionsdata('UploadData');
+        }
     }       
     
     const [colDefs, setColDefs] = useState([
@@ -113,11 +122,18 @@ const App = () => {
             
             <div className='mb-3 mt-3'>
               <label htmlFor='Technology_Type' className='form-label'>
-              Technology_Type
+                Technology_Type
               </label>
               <input type='text' className='form-control' id='Technology_Type' name='Technology_Type' onChange={handleInputChange} value={formData.Technology_Type} style={{ width: '100px' }}/>
             </div>
-  
+
+            <div className='mb-3 mt-3'>
+              <label htmlFor='FileName' className='form-label'>
+                File Name
+              </label>
+              <input type='text' className='form-control' id='FileName' name='FileName' onChange={handleInputChange} value={formData.FileName} style={{ width: '100px' }}/>
+            </div>
+
             <br></br>
             <br></br>
   
@@ -132,7 +148,11 @@ const App = () => {
             <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('getByTechnologyType')} style={{ marginRight: '15px', backgroundColor: 'blue' }}>
               Get Data By Technology_Type
             </button>
-  
+
+            <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UploadData')} style={{ marginRight: '15px', backgroundColor: 'magenta' }}>
+              Upload Data
+            </button>
+
             <button type='button' className='btn btn-primary' onClick={clearData} style={{ marginRight: '15px', backgroundColor: 'red' }}>Clear Data</button>
   
           </form>
