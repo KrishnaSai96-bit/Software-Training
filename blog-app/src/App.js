@@ -20,8 +20,10 @@ const App = () => {
       Technology_Type: '',
       FileName: ''
     });
-
-  const fetchExceptionsdata = async (buttonValue) => {
+    
+  let updated_data = null;
+  let selected_row_data = null;
+  let add_index;const fetchExceptionsdata = async (buttonValue) => {
     let response;
     if (buttonValue === 'GetData') {
       // add code here to call the appropriate get method based on the form value
@@ -35,6 +37,15 @@ const App = () => {
     else if (buttonValue === 'getAllData') {
       response = await api.get('/KnowledgeHub/GetData/');
     }
+    else if (buttonValue === 'SaveData') {
+      const selectedData = gridRef.current.api.getSelectedRows();
+      for (var i = 0; i < selectedData.length; i++){
+        selected_row_data = selectedData[i];
+        console.log(selected_row_data);
+        await api.post(`/KnowledgeHub/CreateData/${selected_row_data.Message_ID}`, selected_row_data);
+      }
+      return;
+    } 
     else if (buttonValue === 'UploadData') {
       response = await api.post(`/KnowledgeHub/InsertFileData/${formData.FileName}`);
       response = await api.get('/KnowledgeHub/GetData/');
@@ -68,6 +79,9 @@ const App = () => {
         else if (buttonValue === 'UploadData') {
           fetchExceptionsdata('UploadData');
         }
+        else if (buttonValue === 'SaveData') {
+          fetchExceptionsdata('SaveData');
+        }
     }       
     
     const [colDefs, setColDefs] = useState([
@@ -78,6 +92,41 @@ const App = () => {
       { field: "Description", editable: true, filter: true, cellDataType: 'text'},
     ]);
 
+    const createNewRowData = () => {
+      const newData = {
+        Message_ID: 'ID',
+        Technology_Type: 'Technology',
+        Exception_Type: 'Type',
+        Exception_Title: 'Title',
+        Description: 'Description',
+      };
+      return newData;
+    }
+    
+    const onRemoveSelected = useCallback(() => {
+      const selectedData = gridRef.current.api.getSelectedRows();
+      const res = gridRef.current.api.applyTransaction({remove: selectedData});
+    }, []);
+  
+    const addSingleItem = useCallback(() => {
+      const newItem = createNewRowData();
+      const res = gridRef.current.api.applyTransaction({
+      add: [newItem],
+    });
+    }, []);
+  
+  const addMultipleItems = useCallback((addIndex) => {
+    const newItems = [
+      createNewRowData(),
+      createNewRowData(),
+      // Add more rows as needed
+    ];
+    const res = gridRef.current.api.applyTransaction({
+      add: newItems,
+      addIndex: addIndex,
+    });
+  }, []);
+  
     const clearData = useCallback(() => {
       const selectedData = gridRef.current.api.getSelectedRows();
     
@@ -106,13 +155,7 @@ const App = () => {
   
         <div className='container'>
           <form>
-  
-          {/* <div className='container-fluid'>
-            <a className='navbar-brand'>
-              Filter By : 
-            </a>
-          </div>
-   */}
+
             <div className='mb-3 mt-3'>
               <label htmlFor='Message_ID' className='form-label'>
                 Message_ID
@@ -152,6 +195,20 @@ const App = () => {
             <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('UploadData')} style={{ marginRight: '15px', backgroundColor: 'magenta' }}>
               Upload Data
             </button>
+
+            <button type='button' className='btn btn-primary' onClick={() => handleButtonClick('SaveData')} style={{ marginRight: '15px', backgroundColor: 'green'}}>
+              Save Data
+            </button>
+
+            <br></br>
+            <br></br>
+
+            <button type='button' className='btn btn-primary' onClick={() => addSingleItem(undefined)} style={{ marginRight: '15px' }}>Add Single Item</button>
+
+            <button type='button' className='btn btn-primary' onClick={() => addMultipleItems(undefined)} style={{ marginRight: '15px' }}>
+            Add Multiple Items </button>
+
+            <button type='button' className='btn btn-primary' onClick={onRemoveSelected} style={{ marginRight: '15px', backgroundColor: 'purple' }}>Remove Selected</button>
 
             <button type='button' className='btn btn-primary' onClick={clearData} style={{ marginRight: '15px', backgroundColor: 'red' }}>Clear Data</button>
   
