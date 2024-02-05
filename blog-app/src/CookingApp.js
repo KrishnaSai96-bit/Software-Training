@@ -105,11 +105,7 @@ const App = () => {
       }
 
   }
-
-  // const [rowData, setRowData] = useState([
-  //   { ID: "Voyager", Title: "NASA", Ingredients: "Ingredients", CookingTime: "1977-09-05", Category: "Category", Steps: "Steps" },
-  // ]);
-  // const gridOptions = {rowSelection: 'multiple', pagination: true}
+  
   const [colDefs, setColDefs] = useState([
     { field: "ID", editable: true, filter: true, pinned: 'left', cellDataType: 'number'},
     { field: "Title", editable: true, filter: true, pinned: 'left', cellDataType: 'text'},

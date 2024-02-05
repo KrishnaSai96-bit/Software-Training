@@ -110,7 +110,7 @@ async def GetData(Message_ID: str, db:db_dependency):
         exceptions_list.append(exceptions_dict)
     return exceptions_list
 
-@app.get("/KnowledgeHub/GetData_Using_Technology_Type/{TechnologyType}", status_code=status.HTTP_200_OK)
+@app.get("/KnowledgeHub/GetData_Using_Technology_Type/{Technology_Type}", status_code=status.HTTP_200_OK)
 async def GetData(Technology_Type: str, db:db_dependency):
     statement = text("SELECT * FROM knowledgehub.knowledge_hub where Technology_Type = :Technology_Type")
     result = db.execute(statement, {'Technology_Type': Technology_Type})
