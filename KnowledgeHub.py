@@ -120,3 +120,11 @@ async def GetData(Technology_Type: str, db:db_dependency):
         exceptions_dict = {'Message_ID':exceptions[i][0], 'Technology_Type':exceptions[i][1], 'Exception_Type':exceptions[i][2], 'Exception_Title':exceptions[i][3], 'Description':exceptions[i][4]}
         exceptions_list.append(exceptions_dict)
     return exceptions_list
+
+@app.put("/KnowledgeHub/Update_ExceptionsData/{Message_ID}", status_code=status.HTTP_200_OK)
+async def Update_ExceptionsData(Message_ID: int, exceptiondataBO: KnowledgeHub, db:db_dependency):
+    exceptiondataBO = exceptiondataBO.model_dump()
+    exceptiondataBO['Message_ID'] = Message_ID
+    statement = text("UPDATE knowledgehub.knowledge_hub SET Message_ID = :Message_ID, Technology_Type = :Technology_Type, Exception_Type = :Exception_Type, Exception_Title = :Exception_Title, Description = :Description WHERE Message_ID =:Message_ID")
+    db.execute(statement, exceptiondataBO)
+    db.commit()

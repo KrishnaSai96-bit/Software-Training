@@ -42,7 +42,7 @@ const App = () => {
       for (var i = 0; i < selectedData.length; i++){
         selected_row_data = selectedData[i];
         console.log(selected_row_data);
-        await api.post(`/KnowledgeHub/CreateData/${selected_row_data.Message_ID}`, selected_row_data);
+        await api.put(`/KnowledgeHub/Update_ExceptionsData/${selected_row_data.Message_ID}`, selected_row_data);
       }
       return;
     } 
@@ -86,10 +86,10 @@ const App = () => {
     
     const [colDefs, setColDefs] = useState([
       { field: "Message_ID", editable: true, filter: true, cellDataType: 'number'},
-      { field: "Technology_Type", editable: true, filter: true, cellDataType: 'text'},
-      { field: "Exception_Type", editable: true, filter: true, cellDataType: 'text'},
-      { field: "Exception_Title", editable: true, filter: true, cellDataType: 'text'},
-      { field: "Description", editable: true, filter: true, cellDataType: 'text'},
+      { field: "Technology_Type", editable: true, filter: true, cellDataType: 'string'},
+      { field: "Exception_Type", editable: true, filter: true, cellDataType: 'string'},
+      { field: "Exception_Title", editable: true, filter: true, cellDataType: 'string'},
+      { field: "Description", editable: true, filter: true, cellDataType: 'string'},
     ]);
 
     const createNewRowData = () => {
@@ -222,7 +222,7 @@ const App = () => {
             rowData={exceptionsdata} 
             columnDefs={colDefs} 
             //onCellValueChanged={handleCellValueChanged}
-            //onClick={() => handleButtonClick('SaveData')} 
+            onClick={() => handleButtonClick('SaveData')} 
             rowSelection={'multiple'}
             pagination={true}
             />
