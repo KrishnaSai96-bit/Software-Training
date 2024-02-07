@@ -1,43 +1,54 @@
 openapi: 3.0.0
 info:
-  title: KnowledgeHub API
+  title: Knowledge Hub API
+  description: API documentation for retrieving data from the Knowledge Hub.
   version: 1.0.0
+servers:
+  - url: https://api.example.com
+    description: Production server
 paths:
-  KnowledgeHub/GetData_Using_ID/{Message_ID}:
+  /KnowledgeHub/GetData_Using_ID/{Message_ID}:
     get:
-      summary: Retrieve data by ID
+      summary: Retrieve Data from Knowledge Hub by Message ID
+      description: |
+        Retrieves data from the Knowledge Hub based on the provided Message ID.
       parameters:
         - in: path
           name: Message_ID
           required: true
+          description: The unique identifier of the message.
           schema:
             type: integer
       responses:
         '200':
-          description: OK
+          description: A successful response containing the requested data.
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  message:
+                  Message_ID:
+                    type: integer
+                    description: The unique identifier of the message.
+                  Technology_Type:
                     type: string
-                    properties:
-                      Message_ID:
-                        type: integer
-                        description: The ID of the message
-                      Technology_Type:  
-                        type: string
-                        description: The technology type of the message
-                      Exception_Type:
-                        type: string
-                        description: The exception type of the message
-                      Exception_Title:
-                        type: string
-                        description: The exception title of the message
-                      Description:
-                        type: string
-                        description: The description of the message
+                    description: The type of technology associated with the message.
+                  Exception_Type:
+                    type: string
+                    description: The type of exception.
+                  Exception_Title:
+                    type: string
+                    description: The title of the exception.
+                  Description:
+                    type: string
+                    description: A description of the exception.
+        '404':
+          description: Not found. The requested resource does not exist.
+        '500':
+          description: Internal server error. An unexpected error occurred on the server.
+      security:
+        - apiKey: []
+
 
 API Example:
 URL:

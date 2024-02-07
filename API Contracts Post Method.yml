@@ -1,11 +1,17 @@
 openapi: 3.0.0
 info:
-  title: KnowledgeHub API
+  title: Knowledge Hub API
+  description: API documentation for creating data in the Knowledge Hub.
   version: 1.0.0
+servers:
+  - url: https://api.example.com
+    description: Production server
 paths:
-  /KnowledgeHub/CreateData:
+  /KnowledgeHub/CreateData/:
     post:
-      summary: Create a new exception type
+      summary: Create Data in Knowledge Hub
+      description: |
+        Creates new data in the Knowledge Hub.
       requestBody:
         required: true
         content:
@@ -13,30 +19,34 @@ paths:
             schema:
               type: object
               properties:
-                data:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      Message_ID:
-                        type: integer
-                        description: The ID of the message
-                      Technology_Type:
-                        type: string
-                        description: The technology type of the message
-                      Exception_Type:
-                        type: string
-                        description: The exception type of the message
-                      Exception_Title:
-                        type: string
-                        description: The exception title of the message
-                      Description:
-                        type: string
-                        description: The description of the message
+                Message_ID:
+                  type: integer
+                  description: The unique identifier of the message.
+                Technology_Type:
+                  type: string
+                  description: The type of technology associated with the message.
+                Exception_Type:
+                  type: string
+                  description: The type of exception.
+                Exception_Title:
+                  type: string
+                  description: The title of the exception.
+                Description:
+                  type: string
+                  description: A description of the exception.
               required:
-                - data
+                - Message_ID
+                - Technology_Type
+                - Exception_Type
+                - Exception_Title
+                - Description
       responses:
         '201':
-          description: Created
+          description: Data created successfully.
         '400':
-          description: Bad Request
+          description: Bad request. The request body is missing required information or is malformed.
+        '500':
+          description: Internal server error. An unexpected error occurred on the server.
+      security:
+        - apiKey: []
+
