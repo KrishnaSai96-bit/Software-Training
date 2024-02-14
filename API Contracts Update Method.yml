@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Knowledge Hub API
+  description: API documentation for updating exception data in the Knowledge Hub.
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+    description: Production server
+paths:
+  /KnowledgeHub/Update_ExceptionsData/{Message_ID}:
+    put:
+      summary: Update Exception Data in Knowledge Hub
+      description: |
+        Updates existing exception data in the Knowledge Hub based on the provided Message ID.
+      parameters:
+        - in: path
+          name: Message_ID
+          required: true
+          description: The unique identifier of the message.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Technology_Type:
+                  type: string
+                  description: The type of technology associated with the message.
+                Exception_Type:
+                  type: string
+                  description: The type of exception.
+                Exception_Title:
+                  type: string
+                  description: The title of the exception.
+                Description:
+                  type: string
+                  description: A description of the exception.
+              required:
+                - Technology_Type
+                - Exception_Type
+                - Exception_Title
+                - Description
+      responses:
+        '200':
+          description: Data updated successfully.
+        '400':
+          description: Bad request. The request body is missing required information or is malformed.
+        '404':
+          description: Not found. The specified message ID does not exist.
+        '500':
+          description: Internal server error. An unexpected error occurred on the server.
+      security:
+        - apiKey: []
