@@ -23,7 +23,8 @@ const App = () => {
     
   let updated_data = null;
   let selected_row_data = null;
-  let add_index;const fetchExceptionsdata = async (buttonValue) => {
+  let add_index;
+  const fetchExceptionsdata = async (buttonValue) => {
     let response;
     if (buttonValue === 'GetData') {
       // add code here to call the appropriate get method based on the form value
